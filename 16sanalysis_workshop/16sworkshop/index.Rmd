@@ -1,0 +1,45 @@
+--- 
+title: "16s rRNA analysis workshop"
+author: "Hena R. Ramay"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This tutorial covers workshop material for all three days"
+---
+
+# Introduction
+
+Our intention is to develop workshop material as we go along. For each day of the workshop, the basic material will be uploaded and more details will be added based on your questions and problems we encounter. So please ask as many questions are you can to help us in making this workshop better!!
+
+## Workshop Schedule
+
+We will try to cover the following material in the course:
+
+- Day1
+  - 9:30 - 10:30 am Introductions and a presentation of the basic concepts
+  - 10:30 - 10:45 am Break 
+  - 10:45 - 12 pm Installations of the required packages and data download
+  - 12 -  1 pm Lunch break
+  - 1 - 3 pm Reading data in and inspecting read quality
+
+- Day2
+  - 9:30 -10:30 am Filter and trim + learn error rates + Sample inference + Merge samples
+  - 10:30 - 10:45 am Break
+  - 10:45 - 12 Generate sequence table and remove Chimeras
+  - 12 -  1 pm Lunch break 
+  - 1- 3 pm  Taxonomy explanation + assign your sequences. If time permits, make a phyloseq object
+  
+- Day3
+  - 9-10:30 am Using a phyloseq object to calculate alpha and beta diversity
+  - 10:30 on wards we will use a real world dataset to re-do what we have learned here 
+  
+  
+## Important links
+  
+- DADA2 Tutorial :  [link](http://benjjneb.github.io/dada2/tutorial.html) 
+- Day One presentation : [link](microbiomeworkshop.pdf)
+- Day One dataset : [link](MiSeqSOPData.zip)
+- Project dataset : [link](https://www.dropbox.com/sh/qra6ohbsyt1icaz/AAACvlNjUhfkbkGIp_1KA2uCa?dl=0)

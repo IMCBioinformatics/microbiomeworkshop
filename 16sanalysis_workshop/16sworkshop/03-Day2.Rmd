@@ -1,0 +1,117 @@
+# Day Two
+
+## Main concepts to be discussed:
+- Finish dada2 pipeline
+- Assign Taxonomy
+- Intro to Phyolseq package
+- Create a Phylum level bar plots
+- Alpha diversity plots
+- Beta diversity plots
+
+
+Once we are finished using the dada2 package, we will have a sequence table and taxonomy table. 
+
+Lets look at the metadata files we have to get more information about these samples.
+
+```{r,metadata}
+
+library(ggplot2)
+library(dplyr)
+time_info<-read.delim("~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.time.design",sep  = "\t")
+dpw_info<-read.delim("~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.dpw.metadata",sep  = "\t")
+
+sample_info<-left_join(time_info,dpw_info,by="group")
+
+rownames(sample_info)<- sample_info$group
+
+sample_info
+```
+
+Lets make a phyloseq object
+
+```{r}
+
+
+
+
+```
+
+Now that we have sample_info lets try to make a phyloseq object out of this
+
+```{r, phyloseq}
+library(phyloseq)
+taxa<-readRDS("~/projects/16sanalysis_workshop/workshoptutorial/output/taxa.rds")
+seq<-readRDS("~/projects/16sanalysis_workshop/workshoptutorial/output/seq.rds")
+
+ps <- phyloseq(otu_table(seq,taxa_are_rows = F), 
+               sample_data(sample_info), 
+               tax_table(taxa))
+
+ps
+```
+
+You can see that this object has an OTU table(ASV table), sample data and tax_table. You can use functions tax_table(), sample_data() and otu_table() to access the data.
+
+Take a look at:
+
+- subset_samples()
+- subset_taxa()
+- tax_glom()
+- sample_sums()
+- prune_samples()
+- transform_sample_counts()
+- psmelt()
+
+
+
+```{r}
+ps2<-tax_glom(ps,taxrank = "Phylum")
+ps2 = transform_sample_counts(ps2, function(x) x/sum(x))
+pmelt<-psmelt(ps2) %>% arrange(desc(Abundance))
+
+cutoff<-0.005
+pmelt_filt<-pmelt %>% group_by(Phylum,time) %>% filter(sum(Abundance) >cutoff)
+
+ggplot(pmelt_filt,aes(x=Sample,y=Abundance,color=Phylum,fill=Phylum)) +geom_bar(stat = "identity")
+
+pmelt_filt %>% group_by(time,Phylum) %>% summarise(mean_Abundance=mean(Abundance)) %>% ggplot(.,aes(x=time,y=mean_Abundance,fill=Phylum)) +geom_bar(stat="identity")
+
+```
+
+Figure out how to change the colors to custom colors!!
+
+```{r, summary}
+
+
+pmelt_filt %>% group_by(time,Phylum) %>% summarise(mean=mean(Abundance))
+
+```
+
+
+## Alpha & beta Diversity
+
+
+
+
+```{r, alpha diversit,echo=F, warning=F}
+
+richness<-estimate_richness(ps)
+richness$time<-ps@sam_data$time
+
+ggplot(richness,aes(x=time,y=Shannon,color=time)) + geom_boxplot() +geom_jitter()
+
+```
+
+```{r,echo=F}
+ps %>%
+transform_sample_counts(., function(x) log(1 + x)) %>%
+plot_ordination(., ordinate(., method="PCoA", distance="bray"),
+color="time" ,title="Bray NMDS")+ scale_colour_manual(values=(c("tomato","blue"))) + geom_point()#%>% #+ theme_bw() 
+
+#ps%>%
+ord<-ordinate(ps,method = "PCoA",distance = "bray")
+
+plot_ordination(ps,ordination = ord,color="time")
+
+```
+

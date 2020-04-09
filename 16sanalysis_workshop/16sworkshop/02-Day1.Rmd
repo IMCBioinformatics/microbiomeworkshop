@@ -1,0 +1,106 @@
+# Day One
+We are very excited to teach this course for the first time and share what we know with you all
+
+So lets start by talking about the very basics:
+
+
+## What are we trying to achieve
+  
+Our goal is very similar to gathering data on a city neighbourhood to find out who lives there, how the demographic changes over time  or in case of a drastic event. We can gather more information by asking about neighbours, quality of life etc. Similarly when we are looking at microbial communities our first question is who is there, how abundant and how their presence changes over time or when conditions change. We can also ask questions like how the microbiomes are interacting with each other (metabolites).
+
+  <p><font color="Tomato">For the scope of this workshop we will stick to the simple questions: who and how much?</p></font>
+  
+  
+<br>
+
+## Basics & Background
+
+Here is the link to the lecture we will  start with today: [workshop](microbiomeworkshop.pdf)
+
+Key points are:
+
+- Think of a hypothesis before doing an experiment
+- Spend time on experiment design.
+  - Sample size, 16s region to amplify etc
+  - Talk to a bioinformatician
+  - Think about the depth of sequencing if you want to capture the less abundant taxa
+  - Add negative control to account for contamination
+  
+- Thoughtful data analysis is critical for successful identification of microbes
+
+<p><font color="Tomato">"If you torture the data long enough, it will confess."- Ronald Coase, Economist </p></font>
+
+## DADA2 pipeline (v1.2)
+ 
+From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link http://benjjneb.github.io/dada2/tutorial.html
+
+All the notes from now on are my additional comments to help you follow the pipeline:
+
+### Data for the tutorial
+
+The data to use for the tutorial can be downloaded from [here](MiSeqSOPData.zip)  
+
+### Getting ready ( load packages and get file list)
+
+Functions that we will be using here are :
+
+- list.files()
+- sort()
+- strsplit()
+- basename()
+- sapply()
+
+### Inspect read quality profiles
+
+Read in files
+
+```{r,readdata}
+library(dada2);
+library(limma)
+path <- "MiSeq_SOP/"
+list.files(path)
+```
+
+
+
+```{r, findsamplenames}
+# Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
+fnFs <- sort(list.files(path, pattern="_R1_001.fastq", full.names = TRUE))
+fnRs <- sort(list.files(path, pattern="_R2_001.fastq", full.names = TRUE))
+# Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
+
+
+tmp<-strsplit(basename(fnFs), "_")
+
+
+# As tmp is a list of vectors, we will have to use sapply function to get the first position out from each vector. The symbol '[' tells sapplly function that it is a vector and 1 specifies the vector index
+
+samples.names<-sapply(tmp,'[',1)
+
+```
+
+
+### Lets make plots to look at the quality for multiple files
+
+
+```{r, make_plots}
+
+plotQualityProfile(fnFs[1:2])
+
+joint_fnames<-c(rbind(fnFs,fnRs))
+
+plotQualityProfile(joint_fnames)
+
+num=ceiling(length(joint_fnames)/6)
+
+for(i in 1: num)
+  
+{
+  plotQualityProfile(joint_fnames[i:i+5])
+  
+  
+}
+
+
+
+```

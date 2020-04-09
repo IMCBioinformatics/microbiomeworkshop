@@ -1,0 +1,103 @@
+---
+title: "R Competency Task"
+output: 
+  html_document: 
+    highlight: kate
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(ggplot2)
+library(dplyr)
+```
+
+
+<br>
+<br>
+
+This short assignment is for all the participants of 16s analysis course. Our intention is to make sure that all of you have a basic knowledge of R that will be necessary to follow the 16s workshop. Please complete the following three assignments and send me back your results by 30 of September.If you have any questions, please ask. We are happy to push you along if you are stuck. 
+
+<br>
+<br>
+
+### Please read in the file provided called titanic.csv using the read_table function.
+
+```{r, echo=F}
+titanic<-read_csv("~/projects/titanic.csv")
+sum <-titanic %>% group_by(Sex,Survived,Age) %>% summarize(Sum=sum(n))
+```
+
+<br>
+<br>
+
+### Using functions you learnt about in tidyverse package (group_by and summarize), make a new tibble/dataframe where all the classes are summed together for each goup of sex, age, survived. The new tibble/dataframe will look like this:
+
+<br>
+
+<pre>
+# A tibble: 8 x 4
+# Groups:   Sex, Survived [4]
+  Sex    Survived Age     Sum
+  <chr>  <chr>    <chr> <dbl>
+1 Female No       Adult   109
+2 Female No       Child    17
+3 Female Yes      Adult   316
+4 Female Yes      Child    28
+5 Male   No       Adult  1329
+6 Male   No       Child    35
+7 Male   Yes      Adult   338
+8 Male   Yes      Child    29
+
+</pre>
+
+<br>
+<br>
+
+### Using this data to make a barplot similar to the following using ggplot2:
+
+
+```{r,echo=F}
+
+ggplot(sum,aes(x=Sex,y=Sum,group=Age,fill=Age)) + geom_bar(stat = "identity")
+```
+
+
+<font color="red">Hint:At your first attempt you might get an error message like this one: Error: stat_count() must not be used with a y aesthetic. Look at the answer here: https://stackoverflow.com/questions/34963138/error-stat-count-in-ggplot2/35930680 </font>
+
+<br>
+<br>
+
+### Now make a new column called combined using the function mutate where you paste together Sex and Age column using the paste0 funciton and form a new 
+
+<br>
+
+<pre>
+
+# A tibble: 8 x 5
+# Groups:   Sex, Survived [4]
+  Sex    Survived Age     Sum Combined   
+  <chr>  <chr>    <chr> <dbl> <chr>      
+1 Female No       Adult   109 FemaleAdult
+2 Female No       Child    17 FemaleChild
+3 Female Yes      Adult   316 FemaleAdult
+4 Female Yes      Child    28 FemaleChild
+5 Male   No       Adult  1329 MaleAdult  
+6 Male   No       Child    35 MaleChild  
+7 Male   Yes      Adult   338 MaleAdult  
+8 Male   Yes      Child    29 MaleChild  
+
+</pre>
+
+```{r,echo=F}
+
+new_group<-sum %>% mutate(Combined=paste0(Sex,Age))
+
+ggplot(new_group,aes(x=Combined,y= Sum,fill=Survived)) + geom_bar(stat = "identity")
+```
+
+<br>
+<br>
+
+Good Luck!!!!
