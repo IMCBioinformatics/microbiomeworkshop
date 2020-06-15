@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Primer Removal | 16s rRNA analysis workshop</title>
+  <meta name="description" content="This tutorial covers workshop material for all three days" />
+  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Primer Removal | 16s rRNA analysis workshop" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This tutorial covers workshop material for all three days" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Primer Removal | 16s rRNA analysis workshop" />
+  
+  <meta name="twitter:description" content="This tutorial covers workshop material for all three days" />
+  
+
+<meta name="author" content="Hena R. Ramay" />
+
+
+<meta name="date" content="2020-06-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="basic-information.html"/>
+<link rel="next" href="dada2.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">16s rRNA Analysis Workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#workshop-schedule"><i class="fa fa-check"></i><b>1.1</b> Workshop Schedule</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#important-links"><i class="fa fa-check"></i><b>1.2</b> Important links</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a><ul>
+<li class="chapter" data-level="2.1" data-path="basic-information.html"><a href="basic-information.html#what-are-we-trying-to-achieve"><i class="fa fa-check"></i><b>2.1</b> What are we trying to achieve</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-information.html"><a href="basic-information.html#basics-background"><i class="fa fa-check"></i><b>2.2</b> Basics &amp; Background</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a><ul>
+<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="primer-removal.html"><a href="primer-removal.html#primer-removal-for-paired-end-reads"><i class="fa fa-check"></i><b>3.1.1</b> Primer removal for paired end reads</a></li>
+<li class="chapter" data-level="3.1.2" data-path="primer-removal.html"><a href="primer-removal.html#quality-trimming"><i class="fa fa-check"></i><b>3.1.2</b> Quality trimming</a></li>
+<li class="chapter" data-level="3.1.3" data-path="primer-removal.html"><a href="primer-removal.html#call-cutadapt-from-r"><i class="fa fa-check"></i><b>3.1.3</b> Call cutAdapt from R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a><ul>
+<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="dada2.html"><a href="dada2.html#data-for-the-tutorial"><i class="fa fa-check"></i><b>4.1.1</b> Data for the tutorial</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dada2.html"><a href="dada2.html#getting-ready-load-packages-and-get-file-list"><i class="fa fa-check"></i><b>4.1.2</b> Getting ready ( load packages and get file list)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dada2.html"><a href="dada2.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>4.1.3</b> Inspect read quality profiles</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dada2.html"><a href="dada2.html#lets-make-plots-to-look-at-the-quality-for-multiple-files"><i class="fa fa-check"></i><b>4.1.4</b> Lets make plots to look at the quality for multiple files</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a><ul>
+<li class="chapter" data-level="5.1" data-path="day-two.html"><a href="day-two.html#main-concepts-to-be-discussed"><i class="fa fa-check"></i><b>5.1</b> Main concepts to be discussed:</a></li>
+<li class="chapter" data-level="5.2" data-path="day-two.html"><a href="day-two.html#alpha-beta-diversity"><i class="fa fa-check"></i><b>5.2</b> Alpha &amp; beta Diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
+<li class="chapter" data-level="7" data-path="what-next.html"><a href="what-next.html"><i class="fa fa-check"></i><b>7</b> What Next?</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">16s rRNA analysis workshop</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="primer-removal" class="section level1">
+<h1><span class="header-section-number">3</span> Primer Removal</h1>
+<p>There are multiple ways in which you can remove primers sequences from your fastq files.
+<a href="https://cutadapt.readthedocs.io/en/stable/index.html">CutAdapt</a> and <a href="http://www.usadellab.org/cms/?page=trimmomatic">trimmomatic</a> are two widely used tools for short-read data. DADA2 package has its own removePrimers sequence function which is recommended for PacBio data.</p>
+<div id="cutadapt" class="section level2">
+<h2><span class="header-section-number">3.1</span> CutAdapt</h2>
+<p>The first step that everyone performs before doing an analysis is data cleaning. Data cleaning can mean multiple things in this context: primer removal, quality trimming, removing very short sequences etc. Remember inconsistent and incorrect data leads to false conclusions. In short, garbage in, garbage out applies to all data.</p>
+<p>The first step that we will do with amplicon data is check which 16s rRNA gene region was sequenced, find the primer that were used and remove them. For this purpose there are a few software available like, cutAdapt, Trimmomatic, skewer. For the purpose of this workshop we will use cutAdapt.</p>
+<p>Cutadapt finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from your high-throughput sequencing reads. It also alows you to perform quality trimming on your reads.</p>
+<div id="primer-removal-for-paired-end-reads" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Primer removal for paired end reads</h3>
+<pre>
+cutadapt -a ADAPTER_FWD -A ADAPTER_REV -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre>
+<p>Here, the input reads are in reads.1.fastq and reads.2.fastq, and the result will be written to out.1.fastq and out.2.fastq.</p>
+<p>In paired-end mode, the options -a, -b, -g and -u that also exist in single-end mode are applied to the forward reads only. To modify the reverse read, these options have uppercase versions -A, -B, -G and -U that work just like their counterparts. In the example above, ADAPTER_FWD will therefore be trimmed from the forward reads and ADAPTER_REV from the reverse reads.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Single-end/R1 option</th>
+<th>Corresponding option for R2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–adapter, -a</td>
+<td>-A</td>
+</tr>
+<tr class="even">
+<td>–front, -g</td>
+<td>-G</td>
+</tr>
+<tr class="odd">
+<td>–anywhere, -b</td>
+<td>-B</td>
+</tr>
+<tr class="even">
+<td>–cut, -u</td>
+<td>-U</td>
+</tr>
+<tr class="odd">
+<td>–output, -o</td>
+<td>–paired-output, -p</td>
+</tr>
+</tbody>
+</table>
+<p>In paired-end mode, Cutadapt checks whether the input files are properly paired. An error is raised if one of the files contains more reads than the other or if the read names in the two files do not match. The read name comparison ignores a trailing /1 or /2 to allow processing some old Illumina paired-end files.</p>
+<p>Cutadapt supports compressed input and output files. Whether an input file needs to be decompressed or an output file needs to be compressed is detected automatically by inspecting the file name: For example, if it ends in .gz, then gzip compression is assumed</p>
+</div>
+<div id="quality-trimming" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Quality trimming</h3>
+<pre>
+cutadapt -q 15,10 -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre>
+<p>-q 15,10</p>
+</div>
+<div id="call-cutadapt-from-r" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> Call cutAdapt from R</h3>
+<p>Follow this link to see how you can call cutAdapt from within R
+<a href="https://benjjneb.github.io/dada2/ITS_workflow.html" class="uri">https://benjjneb.github.io/dada2/ITS_workflow.html</a></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="basic-information.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dada2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["16sworkshop.pdf", "16sworkshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

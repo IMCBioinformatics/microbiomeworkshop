@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Day One | 16s rRNA analysis workshop</title>
   <meta name="description" content="This tutorial covers workshop material for all three days" />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Day One | 16s rRNA analysis workshop" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2019-10-17" />
+<meta name="date" content="2020-06-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,11 +140,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="day-one.html"><a href="day-one.html"><i class="fa fa-check"></i><b>2</b> Day One</a><ul>
 <li class="chapter" data-level="2.1" data-path="day-one.html"><a href="day-one.html#what-are-we-trying-to-achieve"><i class="fa fa-check"></i><b>2.1</b> What are we trying to achieve</a></li>
 <li class="chapter" data-level="2.2" data-path="day-one.html"><a href="day-one.html#basics-background"><i class="fa fa-check"></i><b>2.2</b> Basics &amp; Background</a></li>
-<li class="chapter" data-level="2.3" data-path="day-one.html"><a href="day-one.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>2.3</b> DADA2 pipeline (v1.2)</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="day-one.html"><a href="day-one.html#data-for-the-tutorial"><i class="fa fa-check"></i><b>2.3.1</b> Data for the tutorial</a></li>
-<li class="chapter" data-level="2.3.2" data-path="day-one.html"><a href="day-one.html#getting-ready-load-packages-and-get-file-list"><i class="fa fa-check"></i><b>2.3.2</b> Getting ready ( load packages and get file list)</a></li>
-<li class="chapter" data-level="2.3.3" data-path="day-one.html"><a href="day-one.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>2.3.3</b> Inspect read quality profiles</a></li>
-<li class="chapter" data-level="2.3.4" data-path="day-one.html"><a href="day-one.html#lets-make-plots-to-look-at-the-quality-for-multiple-files"><i class="fa fa-check"></i><b>2.3.4</b> Lets make plots to look at the quality for multiple files</a></li>
+<li class="chapter" data-level="2.3" data-path="day-one.html"><a href="day-one.html#cutadapt"><i class="fa fa-check"></i><b>2.3</b> CutAdapt</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="day-one.html"><a href="day-one.html#primer-removal-for-paired-end-reads"><i class="fa fa-check"></i><b>2.3.1</b> Primer removal for paired end reads</a></li>
+<li class="chapter" data-level="2.3.2" data-path="day-one.html"><a href="day-one.html#quality-trimming"><i class="fa fa-check"></i><b>2.3.2</b> Quality trimming</a></li>
+<li class="chapter" data-level="2.3.3" data-path="day-one.html"><a href="day-one.html#call-cutadapt-from-r"><i class="fa fa-check"></i><b>2.3.3</b> Call cutAdapt from R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="day-one.html"><a href="day-one.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>2.4</b> DADA2 pipeline (v1.2)</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="day-one.html"><a href="day-one.html#data-for-the-tutorial"><i class="fa fa-check"></i><b>2.4.1</b> Data for the tutorial</a></li>
+<li class="chapter" data-level="2.4.2" data-path="day-one.html"><a href="day-one.html#getting-ready-load-packages-and-get-file-list"><i class="fa fa-check"></i><b>2.4.2</b> Getting ready ( load packages and get file list)</a></li>
+<li class="chapter" data-level="2.4.3" data-path="day-one.html"><a href="day-one.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>2.4.3</b> Inspect read quality profiles</a></li>
+<li class="chapter" data-level="2.4.4" data-path="day-one.html"><a href="day-one.html#lets-make-plots-to-look-at-the-quality-for-multiple-files"><i class="fa fa-check"></i><b>2.4.4</b> Lets make plots to look at the quality for multiple files</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>3</b> Day Two</a><ul>
@@ -176,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="day-one" class="section level1">
 <h1><span class="header-section-number">2</span> Day One</h1>
-<p>We are very excited to teach this course for the first time and share what we know with you all</p>
+<p>We are very excited to teach this workshop and share what we know with you all !</p>
 <p>So lets start by talking about the very basics:</p>
 <div id="what-are-we-trying-to-achieve" class="section level2">
 <h2><span class="header-section-number">2.1</span> What are we trying to achieve</h2>
@@ -207,16 +212,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </p>
 <p></font></p>
 </div>
+<div id="cutadapt" class="section level2">
+<h2><span class="header-section-number">2.3</span> CutAdapt</h2>
+<p>The first step that everyone performs before doing an analysis is data cleaning. Data cleaning can mean multiple things in this context: primer removal, quality trimming, removing very short sequences etc. Remember inconsistent and incorrect data leads to false conclusions. In short, garbage in, garbage out applies to all data.</p>
+<p>The first step that we will do with amplicon data is check which 16s rRNA gene region was sequenced, find the primer that were used and remove them. For this purpose there are a few software available like, cutAdapt, Trimmomatic, skewer. For the purpose of this workshop we will use cutAdapt.</p>
+<p>Cutadapt finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from your high-throughput sequencing reads. It also alows you to perform quality trimming on your reads.</p>
+<div id="primer-removal-for-paired-end-reads" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Primer removal for paired end reads</h3>
+<pre>
+cutadapt -a ADAPTER_FWD -A ADAPTER_REV -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre>
+<p>Here, the input reads are in reads.1.fastq and reads.2.fastq, and the result will be written to out.1.fastq and out.2.fastq.</p>
+<p>In paired-end mode, the options -a, -b, -g and -u that also exist in single-end mode are applied to the forward reads only. To modify the reverse read, these options have uppercase versions -A, -B, -G and -U that work just like their counterparts. In the example above, ADAPTER_FWD will therefore be trimmed from the forward reads and ADAPTER_REV from the reverse reads.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Single-end/R1 option</th>
+<th>Corresponding option for R2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–adapter, -a</td>
+<td>-A</td>
+</tr>
+<tr class="even">
+<td>–front, -g</td>
+<td>-G</td>
+</tr>
+<tr class="odd">
+<td>–anywhere, -b</td>
+<td>-B</td>
+</tr>
+<tr class="even">
+<td>–cut, -u</td>
+<td>-U</td>
+</tr>
+<tr class="odd">
+<td>–output, -o</td>
+<td>–paired-output, -p</td>
+</tr>
+</tbody>
+</table>
+<p>In paired-end mode, Cutadapt checks whether the input files are properly paired. An error is raised if one of the files contains more reads than the other or if the read names in the two files do not match. The read name comparison ignores a trailing /1 or /2 to allow processing some old Illumina paired-end files.</p>
+<p>Cutadapt supports compressed input and output files. Whether an input file needs to be decompressed or an output file needs to be compressed is detected automatically by inspecting the file name: For example, if it ends in .gz, then gzip compression is assumed</p>
+</div>
+<div id="quality-trimming" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Quality trimming</h3>
+<pre>
+cutadapt -q 15,10 -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre>
+<p>-q 15,10</p>
+</div>
+<div id="call-cutadapt-from-r" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Call cutAdapt from R</h3>
+<p>Follow this link to see how you can call cutAdapt from within R
+<a href="https://benjjneb.github.io/dada2/ITS_workflow.html" class="uri">https://benjjneb.github.io/dada2/ITS_workflow.html</a></p>
+</div>
+</div>
 <div id="dada2-pipeline-v1.2" class="section level2">
-<h2><span class="header-section-number">2.3</span> DADA2 pipeline (v1.2)</h2>
+<h2><span class="header-section-number">2.4</span> DADA2 pipeline (v1.2)</h2>
 <p>From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link <a href="http://benjjneb.github.io/dada2/tutorial.html" class="uri">http://benjjneb.github.io/dada2/tutorial.html</a></p>
 <p>All the notes from now on are my additional comments to help you follow the pipeline:</p>
 <div id="data-for-the-tutorial" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> Data for the tutorial</h3>
+<h3><span class="header-section-number">2.4.1</span> Data for the tutorial</h3>
 <p>The data to use for the tutorial can be downloaded from <a href="MiSeqSOPData.zip">here</a></p>
 </div>
 <div id="getting-ready-load-packages-and-get-file-list" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> Getting ready ( load packages and get file list)</h3>
+<h3><span class="header-section-number">2.4.2</span> Getting ready ( load packages and get file list)</h3>
 <p>Functions that we will be using here are :</p>
 <ul>
 <li>list.files()</li>
@@ -227,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div id="inspect-read-quality-profiles" class="section level3">
-<h3><span class="header-section-number">2.3.3</span> Inspect read quality profiles</h3>
+<h3><span class="header-section-number">2.4.3</span> Inspect read quality profiles</h3>
 <p>Read in files</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="day-one.html#cb1-1"></a><span class="kw">library</span>(dada2);</span></code></pre></div>
 <pre><code>## Loading required package: Rcpp</code></pre>
@@ -271,11 +334,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-12"><a href="day-one.html#cb5-12"></a>samples.names&lt;-<span class="kw">sapply</span>(tmp,<span class="st">&#39;[&#39;</span>,<span class="dv">1</span>)</span></code></pre></div>
 </div>
 <div id="lets-make-plots-to-look-at-the-quality-for-multiple-files" class="section level3">
-<h3><span class="header-section-number">2.3.4</span> Lets make plots to look at the quality for multiple files</h3>
+<h3><span class="header-section-number">2.4.4</span> Lets make plots to look at the quality for multiple files</h3>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="day-one.html#cb6-1"></a><span class="kw">plotQualityProfile</span>(fnFs[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span></code></pre></div>
-<pre><code>## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which
-## will replace the existing scale.</code></pre>
+<pre><code>## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.</code></pre>
 <p><img src="16sworkshop_files/figure-html/make_plots-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="day-one.html#cb8-1"></a>joint_fnames&lt;-<span class="kw">c</span>(<span class="kw">rbind</span>(fnFs,fnRs))</span>
+<span id="cb8-2"><a href="day-one.html#cb8-2"></a></span>
+<span id="cb8-3"><a href="day-one.html#cb8-3"></a><span class="kw">plotQualityProfile</span>(joint_fnames)</span></code></pre></div>
+<pre><code>## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.</code></pre>
+<p><img src="16sworkshop_files/figure-html/make_plots-2.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="day-one.html#cb10-1"></a>num=<span class="kw">ceiling</span>(<span class="kw">length</span>(joint_fnames)<span class="op">/</span><span class="dv">6</span>)</span>
+<span id="cb10-2"><a href="day-one.html#cb10-2"></a></span>
+<span id="cb10-3"><a href="day-one.html#cb10-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="st"> </span>num)</span>
+<span id="cb10-4"><a href="day-one.html#cb10-4"></a></span>
+<span id="cb10-5"><a href="day-one.html#cb10-5"></a>{</span>
+<span id="cb10-6"><a href="day-one.html#cb10-6"></a>  <span class="kw">plotQualityProfile</span>(joint_fnames[i<span class="op">:</span>i<span class="op">+</span><span class="dv">5</span>])</span>
+<span id="cb10-7"><a href="day-one.html#cb10-7"></a></span>
+<span id="cb10-8"><a href="day-one.html#cb10-8"></a></span>
+<span id="cb10-9"><a href="day-one.html#cb10-9"></a>}</span></code></pre></div>
+<pre><code>## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.
+## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.
+## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.
+## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.
+## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.
+## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.
+## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+## replace the existing scale.</code></pre>
 
 </div>
 </div>
@@ -305,12 +397,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -322,6 +413,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

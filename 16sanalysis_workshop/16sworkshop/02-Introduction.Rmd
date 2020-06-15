@@ -1,0 +1,36 @@
+
+# Basic Information
+
+We are very excited to teach this workshop and share what we know with you all !
+
+So lets start by talking about the very basics:
+
+
+## What are we trying to achieve
+
+Our goal is very similar to gathering data on a city neighbourhood to find out who lives there, how the demographic changes over time  or in case of a drastic event. We can gather more information by asking about neighbours, quality of life etc. Similarly when we are looking at microbial communities our first question is who is there, how abundant and how their presence changes over time or when conditions change. We can also ask questions like how the microbiomes are interacting with each other (metabolites).
+
+  <p><font color="Tomato">For the scope of this workshop we will stick to the simple questions: who and how much?</p></font>
+
+
+<br>
+
+## Basics & Background
+
+Here is the link to the lecture we will  start with today: [workshop](microbiomeworkshop.pdf)
+
+Key points are:
+
+- Think of a hypothesis before doing an experiment
+- Spend time on experiment design.
+  - Sample size, 16s region to amplify etc
+  - Talk to a bioinformatician
+  - Think about the depth of sequencing if you want to capture the less abundant taxa
+  - Add negative control to account for contamination
+
+- Thoughtful data analysis is critical for successful identification of microbes
+
+<p><font color="Tomato">"If you torture the data long enough, it will confess."- Ronald Coase, Economist </p></font>
+
+
+
