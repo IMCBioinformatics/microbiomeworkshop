@@ -1,16 +1,16 @@
 # Day One
-We are very excited to teach this course for the first time and share what we know with you all
+We are very excited to teach this workshop and share what we know with you all !
 
 So lets start by talking about the very basics:
 
 
 ## What are we trying to achieve
-  
+
 Our goal is very similar to gathering data on a city neighbourhood to find out who lives there, how the demographic changes over time  or in case of a drastic event. We can gather more information by asking about neighbours, quality of life etc. Similarly when we are looking at microbial communities our first question is who is there, how abundant and how their presence changes over time or when conditions change. We can also ask questions like how the microbiomes are interacting with each other (metabolites).
 
   <p><font color="Tomato">For the scope of this workshop we will stick to the simple questions: who and how much?</p></font>
-  
-  
+
+
 <br>
 
 ## Basics & Background
@@ -25,20 +25,67 @@ Key points are:
   - Talk to a bioinformatician
   - Think about the depth of sequencing if you want to capture the less abundant taxa
   - Add negative control to account for contamination
-  
+
 - Thoughtful data analysis is critical for successful identification of microbes
 
 <p><font color="Tomato">"If you torture the data long enough, it will confess."- Ronald Coase, Economist </p></font>
 
+
+
+
+## CutAdapt
+The first step that everyone performs before doing an analysis is data cleaning. Data cleaning can mean multiple things in this context: primer removal, quality trimming, removing very short sequences etc. Remember inconsistent and incorrect data leads to false conclusions. In short, garbage in, garbage out applies to all data.
+
+The first step that we will do with amplicon data is check which 16s rRNA gene region was sequenced, find the primer that were used and remove them. For this purpose there are a few software available like, cutAdapt, Trimmomatic, skewer. For the purpose of this workshop we will use cutAdapt.
+
+Cutadapt finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from your high-throughput sequencing reads. It also alows you to perform quality trimming on your reads.
+
+### Primer removal for paired end reads
+
+<pre>
+cutadapt -a ADAPTER_FWD -A ADAPTER_REV -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre>
+
+Here, the input reads are in reads.1.fastq and reads.2.fastq, and the result will be written to out.1.fastq and out.2.fastq.
+
+In paired-end mode, the options -a, -b, -g and -u that also exist in single-end mode are applied to the forward reads only. To modify the reverse read, these options have uppercase versions -A, -B, -G and -U that work just like their counterparts. In the example above, ADAPTER_FWD will therefore be trimmed from the forward reads and ADAPTER_REV from the reverse reads.
+
+
+Single-end/R1 option	| Corresponding option for R2
+----------|----------
+--adapter, -a	|-A
+--front, -g	|-G
+--anywhere, -b	| -B
+--cut, -u	| -U
+--output, -o |	--paired-output, -p
+
+In paired-end mode, Cutadapt checks whether the input files are properly paired. An error is raised if one of the files contains more reads than the other or if the read names in the two files do not match. The read name comparison ignores a trailing /1 or /2 to allow processing some old Illumina paired-end files.
+
+
+Cutadapt supports compressed input and output files. Whether an input file needs to be decompressed or an output file needs to be compressed is detected automatically by inspecting the file name: For example, if it ends in .gz, then gzip compression is assumed
+
+### Quality trimming
+
+<pre>
+cutadapt -q 15,10 -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre>
+-q 15,10
+
+
+### Call cutAdapt from R
+Follow this link to see how you can call cutAdapt from within R
+https://benjjneb.github.io/dada2/ITS_workflow.html
+
+
 ## DADA2 pipeline (v1.2)
- 
+
 From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link http://benjjneb.github.io/dada2/tutorial.html
 
 All the notes from now on are my additional comments to help you follow the pipeline:
 
 ### Data for the tutorial
 
-The data to use for the tutorial can be downloaded from [here](MiSeqSOPData.zip)  
+The data to use for the tutorial can be downloaded from [here](MiSeqSOPData.zip)
 
 ### Getting ready ( load packages and get file list)
 
@@ -94,11 +141,11 @@ plotQualityProfile(joint_fnames)
 num=ceiling(length(joint_fnames)/6)
 
 for(i in 1: num)
-  
+
 {
   plotQualityProfile(joint_fnames[i:i+5])
-  
-  
+
+
 }
 
 
