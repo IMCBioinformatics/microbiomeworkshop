@@ -1,2 +1,10 @@
 
 # What Next?
+
+What you have learnt so far is just the beginging!! There is a lot more ot learn and do.
+
+For example, after looking at beta diversity, you can also look at differential abundance to see which taxa are different in each treatment group or over time.
+
+Most commonly used methods for doing this is  [deseq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) and a new one is [corncob](https://github.com/bryandmartin/corncob/). Before using them, please read the papers carefully to know the limitations and correct usage of these pacakages.
+
+Some people also try to do functional analaysis with 16s data and for this [PICRUST2](https://github.com/picrust/picrust2/wiki) pacakge is usually used.

@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2020-06-15" />
+<meta name="date" content="2020-06-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,6 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.3" data-path="dada2.html"><a href="dada2.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>4.1.3</b> Inspect read quality profiles</a></li>
 <li class="chapter" data-level="4.1.4" data-path="dada2.html"><a href="dada2.html#lets-make-plots-to-look-at-the-quality-for-multiple-files"><i class="fa fa-check"></i><b>4.1.4</b> Lets make plots to look at the quality for multiple files</a></li>
 </ul></li>
+<li class="chapter" data-level="4.2" data-path="dada2.html"><a href="dada2.html#some-tips"><i class="fa fa-check"></i><b>4.2</b> Some tips:</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a><ul>
 <li class="chapter" data-level="5.1" data-path="day-two.html"><a href="day-two.html#main-concepts-to-be-discussed"><i class="fa fa-check"></i><b>5.1</b> Main concepts to be discussed:</a></li>
@@ -196,8 +197,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Once we are finished using the dada2 package, we will have a sequence table and taxonomy table.</p>
 <p>Lets look at the metadata files we have to get more information about these samples.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="day-two.html#cb12-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb12-2"><a href="day-two.html#cb12-2"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="day-two.html#cb10-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="day-two.html#cb10-2"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
@@ -206,14 +207,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="day-two.html#cb16-1"></a>time_info&lt;-<span class="kw">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.time.design&quot;</span>,<span class="dt">sep  =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb16-2"><a href="day-two.html#cb16-2"></a>dpw_info&lt;-<span class="kw">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.dpw.metadata&quot;</span>,<span class="dt">sep  =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb16-3"><a href="day-two.html#cb16-3"></a></span>
-<span id="cb16-4"><a href="day-two.html#cb16-4"></a>sample_info&lt;-<span class="kw">left_join</span>(time_info,dpw_info,<span class="dt">by=</span><span class="st">&quot;group&quot;</span>)</span>
-<span id="cb16-5"><a href="day-two.html#cb16-5"></a></span>
-<span id="cb16-6"><a href="day-two.html#cb16-6"></a><span class="kw">rownames</span>(sample_info)&lt;-<span class="st"> </span>sample_info<span class="op">$</span>group</span>
-<span id="cb16-7"><a href="day-two.html#cb16-7"></a></span>
-<span id="cb16-8"><a href="day-two.html#cb16-8"></a>sample_info</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="day-two.html#cb14-1"></a>time_info&lt;-<span class="kw">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.time.design&quot;</span>,<span class="dt">sep  =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb14-2"><a href="day-two.html#cb14-2"></a>dpw_info&lt;-<span class="kw">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.dpw.metadata&quot;</span>,<span class="dt">sep  =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb14-3"><a href="day-two.html#cb14-3"></a></span>
+<span id="cb14-4"><a href="day-two.html#cb14-4"></a>sample_info&lt;-<span class="kw">left_join</span>(time_info,dpw_info,<span class="dt">by=</span><span class="st">&quot;group&quot;</span>)</span>
+<span id="cb14-5"><a href="day-two.html#cb14-5"></a></span>
+<span id="cb14-6"><a href="day-two.html#cb14-6"></a><span class="kw">rownames</span>(sample_info)&lt;-<span class="st"> </span>sample_info<span class="op">$</span>group</span>
+<span id="cb14-7"><a href="day-two.html#cb14-7"></a></span>
+<span id="cb14-8"><a href="day-two.html#cb14-8"></a>sample_info</span></code></pre></div>
 <pre><code>##         group  time dpw
 ## F3D0     F3D0 Early   0
 ## F3D1     F3D1 Early   1
@@ -236,15 +237,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## F3D9     F3D9 Early   9</code></pre>
 <p>Lets make a phyloseq object</p>
 <p>Now that we have sample_info lets try to make a phyloseq object out of this</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="day-two.html#cb18-1"></a><span class="kw">library</span>(phyloseq)</span>
-<span id="cb18-2"><a href="day-two.html#cb18-2"></a>taxa&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/taxa.rds&quot;</span>)</span>
-<span id="cb18-3"><a href="day-two.html#cb18-3"></a>seq&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/seq.rds&quot;</span>)</span>
-<span id="cb18-4"><a href="day-two.html#cb18-4"></a></span>
-<span id="cb18-5"><a href="day-two.html#cb18-5"></a>ps &lt;-<span class="st"> </span><span class="kw">phyloseq</span>(<span class="kw">otu_table</span>(seq,<span class="dt">taxa_are_rows =</span> F),</span>
-<span id="cb18-6"><a href="day-two.html#cb18-6"></a>               <span class="kw">sample_data</span>(sample_info),</span>
-<span id="cb18-7"><a href="day-two.html#cb18-7"></a>               <span class="kw">tax_table</span>(taxa))</span>
-<span id="cb18-8"><a href="day-two.html#cb18-8"></a></span>
-<span id="cb18-9"><a href="day-two.html#cb18-9"></a>ps</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="day-two.html#cb16-1"></a><span class="kw">library</span>(phyloseq)</span>
+<span id="cb16-2"><a href="day-two.html#cb16-2"></a>taxa&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/taxa.rds&quot;</span>)</span>
+<span id="cb16-3"><a href="day-two.html#cb16-3"></a>seq&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/seq.rds&quot;</span>)</span>
+<span id="cb16-4"><a href="day-two.html#cb16-4"></a></span>
+<span id="cb16-5"><a href="day-two.html#cb16-5"></a>ps &lt;-<span class="st"> </span><span class="kw">phyloseq</span>(<span class="kw">otu_table</span>(seq,<span class="dt">taxa_are_rows =</span> F),</span>
+<span id="cb16-6"><a href="day-two.html#cb16-6"></a>               <span class="kw">sample_data</span>(sample_info),</span>
+<span id="cb16-7"><a href="day-two.html#cb16-7"></a>               <span class="kw">tax_table</span>(taxa))</span>
+<span id="cb16-8"><a href="day-two.html#cb16-8"></a></span>
+<span id="cb16-9"><a href="day-two.html#cb16-9"></a>ps</span></code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 234 taxa and 19 samples ]
 ## sample_data() Sample Data:       [ 19 samples by 3 sample variables ]
@@ -260,19 +261,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>transform_sample_counts()</li>
 <li>psmelt()</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="day-two.html#cb20-1"></a>ps2&lt;-<span class="kw">tax_glom</span>(ps,<span class="dt">taxrank =</span> <span class="st">&quot;Phylum&quot;</span>)</span>
-<span id="cb20-2"><a href="day-two.html#cb20-2"></a>ps2 =<span class="st"> </span><span class="kw">transform_sample_counts</span>(ps2, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x))</span>
-<span id="cb20-3"><a href="day-two.html#cb20-3"></a>pmelt&lt;-<span class="kw">psmelt</span>(ps2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Abundance))</span>
-<span id="cb20-4"><a href="day-two.html#cb20-4"></a></span>
-<span id="cb20-5"><a href="day-two.html#cb20-5"></a>cutoff&lt;-<span class="fl">0.005</span></span>
-<span id="cb20-6"><a href="day-two.html#cb20-6"></a>pmelt_filt&lt;-pmelt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Phylum,time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">sum</span>(Abundance) <span class="op">&gt;</span>cutoff)</span>
-<span id="cb20-7"><a href="day-two.html#cb20-7"></a></span>
-<span id="cb20-8"><a href="day-two.html#cb20-8"></a><span class="kw">ggplot</span>(pmelt_filt,<span class="kw">aes</span>(<span class="dt">x=</span>Sample,<span class="dt">y=</span>Abundance,<span class="dt">color=</span>Phylum,<span class="dt">fill=</span>Phylum)) <span class="op">+</span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="day-two.html#cb18-1"></a>ps2&lt;-<span class="kw">tax_glom</span>(ps,<span class="dt">taxrank =</span> <span class="st">&quot;Phylum&quot;</span>)</span>
+<span id="cb18-2"><a href="day-two.html#cb18-2"></a>ps2 =<span class="st"> </span><span class="kw">transform_sample_counts</span>(ps2, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x))</span>
+<span id="cb18-3"><a href="day-two.html#cb18-3"></a>pmelt&lt;-<span class="kw">psmelt</span>(ps2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Abundance))</span>
+<span id="cb18-4"><a href="day-two.html#cb18-4"></a></span>
+<span id="cb18-5"><a href="day-two.html#cb18-5"></a>cutoff&lt;-<span class="fl">0.005</span></span>
+<span id="cb18-6"><a href="day-two.html#cb18-6"></a>pmelt_filt&lt;-pmelt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Phylum,time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">sum</span>(Abundance) <span class="op">&gt;</span>cutoff)</span>
+<span id="cb18-7"><a href="day-two.html#cb18-7"></a></span>
+<span id="cb18-8"><a href="day-two.html#cb18-8"></a><span class="kw">ggplot</span>(pmelt_filt,<span class="kw">aes</span>(<span class="dt">x=</span>Sample,<span class="dt">y=</span>Abundance,<span class="dt">color=</span>Phylum,<span class="dt">fill=</span>Phylum)) <span class="op">+</span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="16sworkshop_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="day-two.html#cb21-1"></a>pmelt_filt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(time,Phylum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean_Abundance=</span><span class="kw">mean</span>(Abundance)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(.,<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>mean_Abundance,<span class="dt">fill=</span>Phylum)) <span class="op">+</span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="day-two.html#cb19-1"></a>pmelt_filt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(time,Phylum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean_Abundance=</span><span class="kw">mean</span>(Abundance)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(.,<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>mean_Abundance,<span class="dt">fill=</span>Phylum)) <span class="op">+</span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="16sworkshop_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <p>Figure out how to change the colors to custom colors!!</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="day-two.html#cb22-1"></a>pmelt_filt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(time,Phylum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(Abundance))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="day-two.html#cb20-1"></a>pmelt_filt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(time,Phylum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(Abundance))</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 3
 ## # Groups:   time [2]
 ##    time  Phylum              mean

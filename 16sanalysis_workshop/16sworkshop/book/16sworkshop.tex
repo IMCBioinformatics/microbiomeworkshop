@@ -113,7 +113,7 @@
 
 \title{16s rRNA analysis workshop}
 \author{Hena R. Ramay}
-\date{2020-06-15}
+\date{2020-06-16}
 
 \begin{document}
 \maketitle
@@ -350,10 +350,10 @@ Read in files
 ## [33] "F3D7_S195_L001_R1_001.fastq"   "F3D7_S195_L001_R2_001.fastq"  
 ## [35] "F3D8_S196_L001_R1_001.fastq"   "F3D8_S196_L001_R2_001.fastq"  
 ## [37] "F3D9_S197_L001_R1_001.fastq"   "F3D9_S197_L001_R2_001.fastq"  
-## [39] "HMP_MOCK.v35.fasta"            "Mock_S280_L001_R1_001.fastq"  
-## [41] "Mock_S280_L001_R2_001.fastq"   "mouse.dpw.metadata"           
-## [43] "mouse.time.design"             "stability.batch"              
-## [45] "stability.files"
+## [39] "filtered"                      "HMP_MOCK.v35.fasta"           
+## [41] "Mock_S280_L001_R1_001.fastq"   "Mock_S280_L001_R2_001.fastq"  
+## [43] "mouse.dpw.metadata"            "mouse.time.design"            
+## [45] "stability.batch"               "stability.files"
 \end{verbatim}
 
 \begin{Shaded}
@@ -404,36 +404,34 @@ Read in files
 
 \includegraphics{16sworkshop_files/figure-latex/make_plots-2.pdf}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{num=}\KeywordTok{ceiling}\NormalTok{(}\KeywordTok{length}\NormalTok{(joint_fnames)}\OperatorTok{/}\DecValTok{6}\NormalTok{)}
+if there are too many files, use arrangegrob. See here \href{https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html}{here} for details
 
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\StringTok{ }\NormalTok{num)}
+For the rest of the DADA2 pipelien please \href{https://benjjneb.github.io/dada2/tutorial.html}{visit}
 
-\NormalTok{\{}
-  \KeywordTok{plotQualityProfile}\NormalTok{(joint_fnames[i}\OperatorTok{:}\NormalTok{i}\OperatorTok{+}\DecValTok{5}\NormalTok{])}
+\hypertarget{some-tips}{%
+\section{Some tips:}\label{some-tips}}
 
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  At every step check how many reads are getting filtered. This is very important to make sure that you are not losing too much data.
+\item
+  If in the filtering step you are losing too many reads, relax the maxEE from 2 to 3 or more. Also check the length that you are truncating at.
+\item
+  If you are using cutAdapt for quality trimming, you don't have to use truncation in filterandtrim function of DADA2
+\item
+  Always keep in mind the overlap length for your region of interest. see the figure below for calculation:
+\end{enumerate}
 
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+\includegraphics{overlap.png}
 
-\begin{verbatim}
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-\end{verbatim}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  If you lose too many sequences to chimera removal, please check that the primers are removed properly.
+\end{enumerate}
 
 \hypertarget{day-two}{%
 \chapter{Day Two}\label{day-two}}
@@ -608,6 +606,14 @@ Figure out how to change the colors to custom colors!!
 
 \hypertarget{what-next}{%
 \chapter{What Next?}\label{what-next}}
+
+What you have learnt so far is just the beginging!! There is a lot more ot learn and do.
+
+For example, after looking at beta diversity, you can also look at differential abundance to see which taxa are different in each treatment group or over time.
+
+Most commonly used methods for doing this is \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{deseq2} and a new one is \href{https://github.com/bryandmartin/corncob/}{corncob}. Before using them, please read the papers carefully to know the limitations and correct usage of these pacakages.
+
+Some people also try to do functional analaysis with 16s data and for this \href{https://github.com/picrust/picrust2/wiki}{PICRUST2} pacakge is usually used.
 
   \bibliography{book.bib,packages.bib}
 

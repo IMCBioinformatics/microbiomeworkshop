@@ -63,18 +63,32 @@ joint_fnames<-c(rbind(fnFs,fnRs))
 
 plotQualityProfile(joint_fnames)
 
-num=ceiling(length(joint_fnames)/6)
-
-for(i in 1: num)
-
-{
-  plotQualityProfile(joint_fnames[i:i+5])
-
-
-}
-
-
 ```
 
+ if there are too many files, use arrangegrob. See here  [here](https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html) for details
+ 
+ 
+ For the rest of the DADA2 pipelien please [visit](https://benjjneb.github.io/dada2/tutorial.html)
+
+ 
+## Some tips:
+
+ 1. At every step check how many reads are getting filtered. This is very important to make sure that you are not losing too much data.
+ 
+ 2. If in the filtering step you are losing too many reads, relax the maxEE from 2 to 3 or more. Also check the length that you are truncating at.
+ 
+3. If you are using cutAdapt for quality trimming, you don't have to use truncation in filterandtrim function of DADA2
+
+4. Always keep in mind the overlap length for your region of interest. see the figure below for calculation:
+
+![](overlap.png)
+
+
+5. If you lose too many sequences to chimera removal, please check that the primers are removed properly.
+
+
+ 
+ 
+ 
 
 
