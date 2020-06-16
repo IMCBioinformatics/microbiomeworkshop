@@ -62,8 +62,8 @@ If you don't care about using either of these tools and want to move on to the n
 
 Use the dada2 pipeline to generate a table of ASVs and a taxonomy table. 
 
-1. Read the names of the **primer removed** fastq files into R and create a list of sample names.
-2. Plot quality profiles of the reads for all samples. Save these as pdf files.
+1. Plot quality profiles of the reads for all samples. Save these as pdf files.
+2. Try a couple of sets of filtering params and determine the best choice.
 3. Filter and trim the data and generate the quality plots again. Save these as well.
 4. Learn the error rates and visually inspect the estimated error rates.
 5. Infer samples. 
