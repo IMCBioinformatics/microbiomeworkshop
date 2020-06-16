@@ -1,3 +1,49 @@
+---
+title: "16s rRNA analysis workshop"
+author: "Hena R. Ramay"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This tutorial covers workshop material for all three days"
+---
+
+# Introduction
+
+Placeholder
+
+
+## Workshop Schedule
+## Important links
+
+<!--chapter:end:index.Rmd-->
+
+
+# Basic Information
+
+Placeholder
+
+
+## What are we trying to achieve
+## Basics & Background
+
+<!--chapter:end:02-Introduction.Rmd-->
+
+
+# Primer Removal
+
+Placeholder
+
+
+## CutAdapt
+### Primer removal for paired end reads
+### Quality trimming
+### Call cutAdapt from R
+
+<!--chapter:end:03-Primer_removal.Rmd-->
+
 
 # DADA2
 
@@ -77,4 +123,28 @@ for(i in 1: num)
 ```
 
 
+
+
+<!--chapter:end:04-DADA2.Rmd-->
+
+
+# Day Two
+
+Placeholder
+
+
+## Main concepts to be discussed:
+## Alpha & beta Diversity
+
+<!--chapter:end:05-Phyloseq.Rmd-->
+
+# Summary
+
+
+<!--chapter:end:06-Project.Rmd-->
+
+
+# What Next?
+
+<!--chapter:end:07-What_to_learn_next.Rmd-->
 
