@@ -38,6 +38,8 @@ Here is an example of how to execute Cutadapt from the command line:
 cutadapt -g <sequence> -G <sequence> -a <sequence> -A <sequence> -o output_forward.fastq -p output_reverse.fastq input_forward.fastq input_reverse.fastq
 ```
 
+Note that you can also run cutadapt from within R. You can find instructions on how to do that [here](https://benjjneb.github.io/dada2/ITS_workflow.html).
+
 ### Trimmomatic
 
 You can find the documentation for this tool [here](http://www.usadellab.org/cms/?page=trimmomatic). 
@@ -49,15 +51,19 @@ For this dataset, you can use [this fasta](https://www.dropbox.com/s/wc2kihxfep2
 Here is an example of how to execute Trimmomatic from the command line:
 
 ```
-java -jar trimmomatic-0.39.jar PE input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:v3v4primers.fa:2:30:10:2:keepBothReads LEADING:0 TRAILING:0 MINLEN:0
+trimmomatic PE input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:v3v4primers.fa:2:30:10:2:keepBothReads LEADING:0 TRAILING:0 MINLEN:0
 ```
+
+### Primers removed
+
+If you don't care about using either of these tools and want to move on to the next step, you can find the sequences with the primers removed [here](https://www.dropbox.com/s/qrf24anx9zllp9t/trimmed_data.zip?dl=0).
 
 ## Task 2
 
 Use the dada2 pipeline to generate a table of ASVs and a taxonomy table. 
 
-1. Read the names of the fastq files into R and create a list of sample names.
-2. Plot quality profiles of the raw reads for all samples. Save these as pdf files.
+1. Read the names of the **primer removed** fastq files into R and create a list of sample names.
+2. Plot quality profiles of the reads for all samples. Save these as pdf files.
 3. Filter and trim the data and generate the quality plots again. Save these as well.
 4. Learn the error rates and visually inspect the estimated error rates.
 5. Infer samples. 

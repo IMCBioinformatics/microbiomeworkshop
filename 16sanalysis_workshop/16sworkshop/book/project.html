@@ -102,6 +102,7 @@
 <li class="chapter" data-level="6.2" data-path="project.html"><a href="project.html#task-1"><i class="fa fa-check"></i><b>6.2</b> Task 1</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="project.html"><a href="project.html#cutadapt-1"><i class="fa fa-check"></i><b>6.2.1</b> Cutadapt</a></li>
 <li class="chapter" data-level="6.2.2" data-path="project.html"><a href="project.html#trimmomatic"><i class="fa fa-check"></i><b>6.2.2</b> Trimmomatic</a></li>
+<li class="chapter" data-level="6.2.3" data-path="project.html"><a href="project.html#primers-removed"><i class="fa fa-check"></i><b>6.2.3</b> Primers removed</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="project.html"><a href="project.html#task-2"><i class="fa fa-check"></i><b>6.3</b> Task 2</a></li>
 <li class="chapter" data-level="6.4" data-path="project.html"><a href="project.html#task-3"><i class="fa fa-check"></i><b>6.4</b> Task 3</a></li>
@@ -155,6 +156,7 @@
 -A CTGCWGCCNCCCGTAGGCTGTCTCTTATACACATCTGACGCTGCCGACGA</code></pre>
 <p>Here is an example of how to execute Cutadapt from the command line:</p>
 <pre><code>cutadapt -g &lt;sequence&gt; -G &lt;sequence&gt; -a &lt;sequence&gt; -A &lt;sequence&gt; -o output_forward.fastq -p output_reverse.fastq input_forward.fastq input_reverse.fastq</code></pre>
+<p>Note that you can also run cutadapt from within R. You can find instructions on how to do that <a href="https://benjjneb.github.io/dada2/ITS_workflow.html">here</a>.</p>
 </div>
 <div id="trimmomatic" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Trimmomatic</h3>
@@ -162,15 +164,19 @@
 <p>Instead of specifying forward and reverse reads, Trimmomatic takes a fasta file as input and searches the reads for all sequences in the files. When using Trimmomatic on paired-end reads, you will get four output files: forward and reverse reads that are still paired (reads for which both forward and reverse were kept) and forward and reverse reads that are unpaired. In general, the number of unpaired reads should be small and you can continue with your analysis without these.</p>
 <p>For this dataset, you can use <a href="https://www.dropbox.com/s/wc2kihxfep23ycw/v3v4primers.fa?dl=0">this fasta</a>.</p>
 <p>Here is an example of how to execute Trimmomatic from the command line:</p>
-<pre><code>java -jar trimmomatic-0.39.jar PE input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:v3v4primers.fa:2:30:10:2:keepBothReads LEADING:0 TRAILING:0 MINLEN:0</code></pre>
+<pre><code>trimmomatic PE input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:v3v4primers.fa:2:30:10:2:keepBothReads LEADING:0 TRAILING:0 MINLEN:0</code></pre>
+</div>
+<div id="primers-removed" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Primers removed</h3>
+<p>If you don’t care about using either of these tools and want to move on to the next step, you can find the sequences with the primers removed <a href="https://www.dropbox.com/s/qrf24anx9zllp9t/trimmed_data.zip?dl=0">here</a>.</p>
 </div>
 </div>
 <div id="task-2" class="section level2">
 <h2><span class="header-section-number">6.3</span> Task 2</h2>
 <p>Use the dada2 pipeline to generate a table of ASVs and a taxonomy table.</p>
 <ol style="list-style-type: decimal">
-<li>Read the names of the fastq files into R and create a list of sample names.</li>
-<li>Plot quality profiles of the raw reads for all samples. Save these as pdf files.</li>
+<li>Read the names of the <strong>primer removed</strong> fastq files into R and create a list of sample names.</li>
+<li>Plot quality profiles of the reads for all samples. Save these as pdf files.</li>
 <li>Filter and trim the data and generate the quality plots again. Save these as well.</li>
 <li>Learn the error rates and visually inspect the estimated error rates.</li>
 <li>Infer samples.</li>
