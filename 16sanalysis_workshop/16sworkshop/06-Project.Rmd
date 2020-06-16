@@ -2,7 +2,7 @@
 
 ## Setup
 
-Please download the raw data [here](project_files/raw_data.zip). 
+Please download the raw data [here](https://www.dropbox.com/s/7sd7ipsswqcjxxj/raw_data.zip?dl=0). 
 
 These samples are from a study looking at the effect of a prebiotic on the gut microbiota of children with type 1 diabetes. To invesigate this, the researchers took samples at three timepoints (baseline, 3 months, and 6 months) and sequenced the **V3-V4** region of the 16S rRNA gene. 
 
