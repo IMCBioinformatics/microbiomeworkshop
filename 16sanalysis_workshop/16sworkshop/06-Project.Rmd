@@ -84,5 +84,127 @@ Use the phyloseq package to generate do some basic analysis. For this section yo
 4. Perform a principal component analysis (PCoA) using the `ordinate()` function and `distance = "bray"`. Plot beta diversity.
 5. Explore the composition of each sample by generating bar plots of the relative abundances at the level of phylum, family, and genus. For family and genus, plot only the top 10 most abundant taxa. 
 
+## Project solutions
 
+### Task 2 - dada2
+
+For this section, the solution closely resembles the code from the [dada2 tutorial](http://benjjneb.github.io/dada2/tutorial.html). The main challenge is to determine the appropriate filtering parameters. 
+
+Here are the quality profiles for the forward and reverse reads for samples 01MP-1 and 03KW-1. You can see that the quality of the ends of the reverse reads are much worse than the forward reads.
+
+![](book/project_files/quality_01MP-1.png)
+
+![](book/project_files/quality_03KW-1.png)
+To help guide our parameter choice, here is a plot showing the percentage of reads that passed filtering as a produce of changing both the forward error rate and the reverse error rate. 
+
+```{r, echo = F}
+library(knitr)
+include_graphics("book/project_files/filt_params.png")
+```
+
+Based on this, we should choose an error rate of `c(3,4)` or something similar. Note that the truncation length used here was `c(265,245)`.
+
+After filtering, we look the effect of the filtering on the quality profiles. Below are the before and after filtering quality profiles of the forward and reverse reads of sample 01MP-1. 
+
+![](book/project_files/quality_filt_for_01MP-1.png)
+
+![](book/project_files/quality_filt_rev_01MP-1.png)
+ 
+### Task 3 - phyloseq
+
+```{r, echo = F, message = F}
+library(phyloseq)
+library(tidyverse)
+```
+
+Following the dada2 pipeline, we will have a sequence table and a taxonomy table. 
+
+```{r}
+path <- "./book/project_files/"
+
+# Read in files
+seqtab <- readRDS(file.path(path, "seqtab.rds"))
+taxa <- readRDS(file.path(path, "taxa.rds"))
+info <- read.table(file.path(path, "project_metadata.txt"), header = TRUE)
+
+# Match sample names
+rownames(info) <- rownames(seqtab)
+
+# Make a phyloseq object
+ps <- phyloseq(otu_table(seqtab, taxa_are_rows=FALSE), sample_data(info), tax_table(taxa))
+
+# Make timepoint a factor
+sample_data(ps)$timepoint <- as.factor(sample_data(ps)$timepoint)
+
+## Histogram of reads per sample
+sums <- rowSums(otu_table(ps))
+counts <- data.frame(as(sample_data(ps), "data.frame"), totalreads = sums)
+
+qq <- ggplot(counts, aes(totalreads)) + geom_histogram(binwidth = 0.02) + ggtitle("Read counts per sample") + scale_x_log10()
+qq
+
+## Alpha diversity
+
+## Make table of alpha diversity calculations
+alpha <- estimate_richness(ps, measures = c("Chao1", "Shannon", "Simpson"))
+alpha_info <- sample_data(ps)
+aa <- cbind(alpha, alpha_info)
+
+
+a0 <- ggplot(aa, aes(x = treatment, y = Shannon, fill = timepoint)) +
+  geom_boxplot(outlier.fill = NULL, outlier.shape = 21) +
+  theme_bw() +
+  geom_point(position = position_dodge(width = 0.75))
+a0
+
+## Beta diversity
+
+# transform to relative abundace
+rel <- transform_sample_counts(ps, function(x) x / sum(x))
+# filter out low prevalence ASVs
+prevdf <- apply(X = otu_table(ps), MARGIN = ifelse(taxa_are_rows(ps), yes = 1, no = 2), FUN = function(x){sum(x > 0)})
+prevdf <- data.frame(prevalence = prevdf, total_abundance = taxa_sums(ps), tax_table(ps))
+prevalence_threshold <- 0.05 * nsamples(ps)
+keeptaxa <- rownames(prevdf)[prevdf$prevalence >= prevalence_threshold]
+relf <- prune_taxa(keeptaxa, rel)
+psf <- prune_taxa(keeptaxa, ps)
+
+ord <- ordinate(relf, method = "PCoA", distance = "bray")
+b0 <- plot_ordination(relf, ord, shape = "treatment", color = "timepoint") +
+  theme_bw()
+b0
+
+## Composition
+
+# Agglomerate to phylum, family, and genus level
+phy <- tax_glom(relf, "Phylum")
+fam <- tax_glom(relf, "Family")
+gen <- tax_glom(relf, "Genus")
+
+phymelt <- psmelt(phy)
+c0 <- ggplot(phymelt, aes(sample_id, Abundance, fill = Phylum)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  facet_wrap(~treatment, scales = "free_x")
+c0
+
+top10 <- names(sort(taxa_sums(fam), TRUE))[1:10]
+fam10 <- prune_taxa(top10, fam)
+fammelt <- psmelt(fam10)
+c1 <- ggplot(fammelt, aes(sample_id, Abundance, fill = Family)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  facet_wrap(~treatment, scales = "free_x")
+c1
+
+top10 <- names(sort(taxa_sums(gen), TRUE))[1:10]
+gen10 <- prune_taxa(top10, gen)
+genmelt <- psmelt(gen10)
+c2 <- ggplot(genmelt, aes(sample_id, Abundance, fill = Genus)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  facet_wrap(~treatment, scales = "free_x")
+c2
+
+```
 

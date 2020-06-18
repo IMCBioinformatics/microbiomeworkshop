@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2020-06-16" />
+<meta name="date" content="2020-06-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,68 @@
 
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -106,6 +168,10 @@
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="project.html"><a href="project.html#task-2"><i class="fa fa-check"></i><b>6.3</b> Task 2</a></li>
 <li class="chapter" data-level="6.4" data-path="project.html"><a href="project.html#task-3"><i class="fa fa-check"></i><b>6.4</b> Task 3</a></li>
+<li class="chapter" data-level="6.5" data-path="project.html"><a href="project.html#project-solutions"><i class="fa fa-check"></i><b>6.5</b> Project solutions</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="project.html"><a href="project.html#task-2---dada2"><i class="fa fa-check"></i><b>6.5.1</b> Task 2 - dada2</a></li>
+<li class="chapter" data-level="6.5.2" data-path="project.html"><a href="project.html#task-3---phyloseq"><i class="fa fa-check"></i><b>6.5.2</b> Task 3 - phyloseq</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="what-next.html"><a href="what-next.html"><i class="fa fa-check"></i><b>7</b> What Next?</a></li>
 <li class="divider"></li>
@@ -198,7 +264,113 @@
 <li>Perform a principal component analysis (PCoA) using the <code>ordinate()</code> function and <code>distance = &quot;bray&quot;</code>. Plot beta diversity.</li>
 <li>Explore the composition of each sample by generating bar plots of the relative abundances at the level of phylum, family, and genus. For family and genus, plot only the top 10 most abundant taxa.</li>
 </ol>
+</div>
+<div id="project-solutions" class="section level2">
+<h2><span class="header-section-number">6.5</span> Project solutions</h2>
+<div id="task-2---dada2" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> Task 2 - dada2</h3>
+<p>For this section, the solution closely resembles the code from the <a href="http://benjjneb.github.io/dada2/tutorial.html">dada2 tutorial</a>. The main challenge is to determine the appropriate filtering parameters.</p>
+<p>Here are the quality profiles for the forward and reverse reads for samples 01MP-1 and 03KW-1. You can see that the quality of the ends of the reverse reads are much worse than the forward reads.</p>
+<p><img src="book/project_files/quality_01MP-1.png" /></p>
+<p><img src="book/project_files/quality_03KW-1.png" />
+To help guide our parameter choice, here is a plot showing the percentage of reads that passed filtering as a produce of changing both the forward error rate and the reverse error rate.</p>
+<p><img src="book/project_files/filt_params.png" width="394" /></p>
+<p>Based on this, we should choose an error rate of <code>c(3,4)</code> or something similar. Note that the truncation length used here was <code>c(265,245)</code>.</p>
+<p>After filtering, we look the effect of the filtering on the quality profiles. Below are the before and after filtering quality profiles of the forward and reverse reads of sample 01MP-1.</p>
+<p><img src="book/project_files/quality_filt_for_01MP-1.png" /></p>
+<p><img src="book/project_files/quality_filt_rev_01MP-1.png" /></p>
+</div>
+<div id="task-3---phyloseq" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> Task 3 - phyloseq</h3>
+<p>Following the dada2 pipeline, we will have a sequence table and a taxonomy table.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">path &lt;-<span class="st"> &quot;./book/project_files/&quot;</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># Read in files</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">seqtab &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;seqtab.rds&quot;</span>))</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">taxa &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;taxa.rds&quot;</span>))</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">info &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;project_metadata.txt&quot;</span>), <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># Match sample names</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">rownames</span>(info) &lt;-<span class="st"> </span><span class="kw">rownames</span>(seqtab)</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co"># Make a phyloseq object</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">ps &lt;-<span class="st"> </span><span class="kw">phyloseq</span>(<span class="kw">otu_table</span>(seqtab, <span class="dt">taxa_are_rows=</span><span class="ot">FALSE</span>), <span class="kw">sample_data</span>(info), <span class="kw">tax_table</span>(taxa))</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co"># Make timepoint a factor</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw">sample_data</span>(ps)<span class="op">$</span>timepoint &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">sample_data</span>(ps)<span class="op">$</span>timepoint)</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## Histogram of reads per sample</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">sums &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">otu_table</span>(ps))</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">counts &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">as</span>(<span class="kw">sample_data</span>(ps), <span class="st">&quot;data.frame&quot;</span>), <span class="dt">totalreads =</span> sums)</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">qq &lt;-<span class="st"> </span><span class="kw">ggplot</span>(counts, <span class="kw">aes</span>(totalreads)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.02</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Read counts per sample&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_log10</span>()</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">qq</a></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">## Alpha diversity</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## Make table of alpha diversity calculations</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">alpha &lt;-<span class="st"> </span><span class="kw">estimate_richness</span>(ps, <span class="dt">measures =</span> <span class="kw">c</span>(<span class="st">&quot;Chao1&quot;</span>, <span class="st">&quot;Shannon&quot;</span>, <span class="st">&quot;Simpson&quot;</span>))</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">alpha_info &lt;-<span class="st"> </span><span class="kw">sample_data</span>(ps)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">aa &lt;-<span class="st"> </span><span class="kw">cbind</span>(alpha, alpha_info)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">a0 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(aa, <span class="kw">aes</span>(<span class="dt">x =</span> treatment, <span class="dt">y =</span> Shannon, <span class="dt">fill =</span> timepoint)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.fill =</span> <span class="ot">NULL</span>, <span class="dt">outlier.shape =</span> <span class="dv">21</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.75</span>))</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">a0</a></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## Beta diversity</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># transform to relative abundace</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">rel &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(ps, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(x))</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># filter out low prevalence ASVs</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">prevdf &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="dt">X =</span> <span class="kw">otu_table</span>(ps), <span class="dt">MARGIN =</span> <span class="kw">ifelse</span>(<span class="kw">taxa_are_rows</span>(ps), <span class="dt">yes =</span> <span class="dv">1</span>, <span class="dt">no =</span> <span class="dv">2</span>), <span class="dt">FUN =</span> <span class="cf">function</span>(x){<span class="kw">sum</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)})</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">prevdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">prevalence =</span> prevdf, <span class="dt">total_abundance =</span> <span class="kw">taxa_sums</span>(ps), <span class="kw">tax_table</span>(ps))</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">prevalence_threshold &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="op">*</span><span class="st"> </span><span class="kw">nsamples</span>(ps)</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">keeptaxa &lt;-<span class="st"> </span><span class="kw">rownames</span>(prevdf)[prevdf<span class="op">$</span>prevalence <span class="op">&gt;=</span><span class="st"> </span>prevalence_threshold]</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">relf &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(keeptaxa, rel)</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">psf &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(keeptaxa, ps)</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">ord &lt;-<span class="st"> </span><span class="kw">ordinate</span>(relf, <span class="dt">method =</span> <span class="st">&quot;PCoA&quot;</span>, <span class="dt">distance =</span> <span class="st">&quot;bray&quot;</span>)</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">b0 &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(relf, ord, <span class="dt">shape =</span> <span class="st">&quot;treatment&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;timepoint&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw">theme_bw</span>()</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">b0</a></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## Composition</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># Agglomerate to phylum, family, and genus level</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">phy &lt;-<span class="st"> </span><span class="kw">tax_glom</span>(relf, <span class="st">&quot;Phylum&quot;</span>)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">fam &lt;-<span class="st"> </span><span class="kw">tax_glom</span>(relf, <span class="st">&quot;Family&quot;</span>)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">gen &lt;-<span class="st"> </span><span class="kw">tax_glom</span>(relf, <span class="st">&quot;Genus&quot;</span>)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">phymelt &lt;-<span class="st"> </span><span class="kw">psmelt</span>(phy)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">c0 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(phymelt, <span class="kw">aes</span>(sample_id, Abundance, <span class="dt">fill =</span> Phylum)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>treatment, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">c0</a></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">top10 &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">sort</span>(<span class="kw">taxa_sums</span>(fam), <span class="ot">TRUE</span>))[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">fam10 &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(top10, fam)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">fammelt &lt;-<span class="st"> </span><span class="kw">psmelt</span>(fam10)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">c1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(fammelt, <span class="kw">aes</span>(sample_id, Abundance, <span class="dt">fill =</span> Family)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>treatment, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">c1</a></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-5.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">top10 &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">sort</span>(<span class="kw">taxa_sums</span>(gen), <span class="ot">TRUE</span>))[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">gen10 &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(top10, gen)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">genmelt &lt;-<span class="st"> </span><span class="kw">psmelt</span>(gen10)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">c2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(genmelt, <span class="kw">aes</span>(sample_id, Abundance, <span class="dt">fill =</span> Genus)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>treatment, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">c2</a></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-6.png" width="672" /></p>
 
+</div>
 </div>
 </div>
             </section>
