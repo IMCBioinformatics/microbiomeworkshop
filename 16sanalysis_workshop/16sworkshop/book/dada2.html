@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 DADA2 | 16s rRNA analysis workshop</title>
   <meta name="description" content="This tutorial covers workshop material for all three days" />
-  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 DADA2 | 16s rRNA analysis workshop" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2020-06-16" />
+<meta name="date" content="2021-11-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="primer-removal.html"/>
 <link rel="next" href="day-two.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,18 +54,18 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -133,23 +134,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">16s rRNA Analysis Workshop</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#workshop-schedule"><i class="fa fa-check"></i><b>1.1</b> Workshop Schedule</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#important-links"><i class="fa fa-check"></i><b>1.2</b> Important links</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a><ul>
+<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="basic-information.html"><a href="basic-information.html#what-are-we-trying-to-achieve"><i class="fa fa-check"></i><b>2.1</b> What are we trying to achieve</a></li>
 <li class="chapter" data-level="2.2" data-path="basic-information.html"><a href="basic-information.html#basics-background"><i class="fa fa-check"></i><b>2.2</b> Basics &amp; Background</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a><ul>
-<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a><ul>
+<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="primer-removal.html"><a href="primer-removal.html#primer-removal-for-paired-end-reads"><i class="fa fa-check"></i><b>3.1.1</b> Primer removal for paired end reads</a></li>
 <li class="chapter" data-level="3.1.2" data-path="primer-removal.html"><a href="primer-removal.html#quality-trimming"><i class="fa fa-check"></i><b>3.1.2</b> Quality trimming</a></li>
 <li class="chapter" data-level="3.1.3" data-path="primer-removal.html"><a href="primer-removal.html#call-cutadapt-from-r"><i class="fa fa-check"></i><b>3.1.3</b> Call cutAdapt from R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a><ul>
-<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a><ul>
+<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="dada2.html"><a href="dada2.html#data-for-the-tutorial"><i class="fa fa-check"></i><b>4.1.1</b> Data for the tutorial</a></li>
 <li class="chapter" data-level="4.1.2" data-path="dada2.html"><a href="dada2.html#getting-ready-load-packages-and-get-file-list"><i class="fa fa-check"></i><b>4.1.2</b> Getting ready ( load packages and get file list)</a></li>
 <li class="chapter" data-level="4.1.3" data-path="dada2.html"><a href="dada2.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>4.1.3</b> Inspect read quality profiles</a></li>
@@ -157,11 +164,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="dada2.html"><a href="dada2.html#some-tips"><i class="fa fa-check"></i><b>4.2</b> Some tips:</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a><ul>
+<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="day-two.html"><a href="day-two.html#main-concepts-to-be-discussed"><i class="fa fa-check"></i><b>5.1</b> Main concepts to be discussed:</a></li>
 <li class="chapter" data-level="5.2" data-path="day-two.html"><a href="day-two.html#alpha-beta-diversity"><i class="fa fa-check"></i><b>5.2</b> Alpha &amp; beta Diversity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>6</b> Project</a></li>
+<li class="chapter" data-level="6" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>6</b> Project</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="project.html"><a href="project.html#setup"><i class="fa fa-check"></i><b>6.1</b> Setup</a></li>
+<li class="chapter" data-level="6.2" data-path="project.html"><a href="project.html#task-1-ignore-this-task"><i class="fa fa-check"></i><b>6.2</b> Task 1 (Ignore this task)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="project.html"><a href="project.html#cutadapt-1"><i class="fa fa-check"></i><b>6.2.1</b> Cutadapt</a></li>
+<li class="chapter" data-level="6.2.2" data-path="project.html"><a href="project.html#trimmomatic"><i class="fa fa-check"></i><b>6.2.2</b> Trimmomatic</a></li>
+<li class="chapter" data-level="6.2.3" data-path="project.html"><a href="project.html#primers-removed"><i class="fa fa-check"></i><b>6.2.3</b> Primers removed</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="project.html"><a href="project.html#task-2"><i class="fa fa-check"></i><b>6.3</b> Task 2</a></li>
+<li class="chapter" data-level="6.4" data-path="project.html"><a href="project.html#task-3"><i class="fa fa-check"></i><b>6.4</b> Task 3</a></li>
+<li class="chapter" data-level="6.5" data-path="project.html"><a href="project.html#project-solutions"><i class="fa fa-check"></i><b>6.5</b> Project solutions</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="project.html"><a href="project.html#task-2---dada2"><i class="fa fa-check"></i><b>6.5.1</b> Task 2 - dada2</a></li>
+<li class="chapter" data-level="6.5.2" data-path="project.html"><a href="project.html#task-3---phyloseq"><i class="fa fa-check"></i><b>6.5.2</b> Task 3 - phyloseq</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="what-next.html"><a href="what-next.html"><i class="fa fa-check"></i><b>7</b> What Next?</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -183,17 +207,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="dada2" class="section level1">
+<div id="dada2" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> DADA2</h1>
-<div id="dada2-pipeline-v1.2" class="section level2">
+<div id="dada2-pipeline-v1.2" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> DADA2 pipeline (v1.2)</h2>
 <p>From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link <a href="http://benjjneb.github.io/dada2/tutorial.html" class="uri">http://benjjneb.github.io/dada2/tutorial.html</a></p>
 <p>All the notes from now on are my additional comments to help you follow the pipeline:</p>
-<div id="data-for-the-tutorial" class="section level3">
+<div id="data-for-the-tutorial" class="section level3" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> Data for the tutorial</h3>
 <p>The data to use for the tutorial can be downloaded from <a href="MiSeqSOPData.zip">here</a></p>
 </div>
-<div id="getting-ready-load-packages-and-get-file-list" class="section level3">
+<div id="getting-ready-load-packages-and-get-file-list" class="section level3" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> Getting ready ( load packages and get file list)</h3>
 <p>Functions that we will be using here are :</p>
 <ul>
@@ -204,14 +228,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>sapply()</li>
 </ul>
 </div>
-<div id="inspect-read-quality-profiles" class="section level3">
+<div id="inspect-read-quality-profiles" class="section level3" number="4.1.3">
 <h3><span class="header-section-number">4.1.3</span> Inspect read quality profiles</h3>
 <p>Read in files</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dada2.html#cb1-1"></a><span class="kw">library</span>(dada2);</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dada2.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dada2);</span></code></pre></div>
 <pre><code>## Loading required package: Rcpp</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="dada2.html#cb3-1"></a><span class="kw">library</span>(limma)</span>
-<span id="cb3-2"><a href="dada2.html#cb3-2"></a>path &lt;-<span class="st"> &quot;MiSeq_SOP/&quot;</span></span>
-<span id="cb3-3"><a href="dada2.html#cb3-3"></a><span class="kw">list.files</span>(path)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="dada2.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(limma)</span>
+<span id="cb3-2"><a href="dada2.html#cb3-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;MiSeq_SOP/&quot;</span></span>
+<span id="cb3-3"><a href="dada2.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(path)</span></code></pre></div>
 <pre><code>##  [1] &quot;F3D0_S188_L001_R1_001.fastq&quot;   &quot;F3D0_S188_L001_R2_001.fastq&quot;  
 ##  [3] &quot;F3D1_S189_L001_R1_001.fastq&quot;   &quot;F3D1_S189_L001_R2_001.fastq&quot;  
 ##  [5] &quot;F3D141_S207_L001_R1_001.fastq&quot; &quot;F3D141_S207_L001_R2_001.fastq&quot;
@@ -235,28 +259,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [41] &quot;Mock_S280_L001_R1_001.fastq&quot;   &quot;Mock_S280_L001_R2_001.fastq&quot;  
 ## [43] &quot;mouse.dpw.metadata&quot;            &quot;mouse.time.design&quot;            
 ## [45] &quot;stability.batch&quot;               &quot;stability.files&quot;</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="dada2.html#cb5-1"></a><span class="co"># Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq</span></span>
-<span id="cb5-2"><a href="dada2.html#cb5-2"></a>fnFs &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">list.files</span>(path, <span class="dt">pattern=</span><span class="st">&quot;_R1_001.fastq&quot;</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb5-3"><a href="dada2.html#cb5-3"></a>fnRs &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">list.files</span>(path, <span class="dt">pattern=</span><span class="st">&quot;_R2_001.fastq&quot;</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb5-4"><a href="dada2.html#cb5-4"></a><span class="co"># Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq</span></span>
-<span id="cb5-5"><a href="dada2.html#cb5-5"></a></span>
-<span id="cb5-6"><a href="dada2.html#cb5-6"></a></span>
-<span id="cb5-7"><a href="dada2.html#cb5-7"></a>tmp&lt;-<span class="kw">strsplit</span>(<span class="kw">basename</span>(fnFs), <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb5-8"><a href="dada2.html#cb5-8"></a></span>
-<span id="cb5-9"><a href="dada2.html#cb5-9"></a></span>
-<span id="cb5-10"><a href="dada2.html#cb5-10"></a><span class="co"># As tmp is a list of vectors, we will have to use sapply function to get the first position out from each vector. The symbol &#39;[&#39; tells sapplly function that it is a vector and 1 specifies the vector index</span></span>
-<span id="cb5-11"><a href="dada2.html#cb5-11"></a></span>
-<span id="cb5-12"><a href="dada2.html#cb5-12"></a>samples.names&lt;-<span class="kw">sapply</span>(tmp,<span class="st">&#39;[&#39;</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="dada2.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq</span></span>
+<span id="cb5-2"><a href="dada2.html#cb5-2" aria-hidden="true" tabindex="-1"></a>fnFs <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">list.files</span>(path, <span class="at">pattern=</span><span class="st">&quot;_R1_001.fastq&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-3"><a href="dada2.html#cb5-3" aria-hidden="true" tabindex="-1"></a>fnRs <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">list.files</span>(path, <span class="at">pattern=</span><span class="st">&quot;_R2_001.fastq&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-4"><a href="dada2.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq</span></span>
+<span id="cb5-5"><a href="dada2.html#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="dada2.html#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="dada2.html#cb5-7" aria-hidden="true" tabindex="-1"></a>tmp<span class="ot">&lt;-</span><span class="fu">strsplit</span>(<span class="fu">basename</span>(fnFs), <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb5-8"><a href="dada2.html#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="dada2.html#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="dada2.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># As tmp is a list of vectors, we will have to use sapply function to get the first position out from each vector. The symbol &#39;[&#39; tells sapplly function that it is a vector and 1 specifies the vector index</span></span>
+<span id="cb5-11"><a href="dada2.html#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="dada2.html#cb5-12" aria-hidden="true" tabindex="-1"></a>samples.names<span class="ot">&lt;-</span><span class="fu">sapply</span>(tmp,<span class="st">&#39;[&#39;</span>,<span class="dv">1</span>)</span></code></pre></div>
 </div>
-<div id="lets-make-plots-to-look-at-the-quality-for-multiple-files" class="section level3">
+<div id="lets-make-plots-to-look-at-the-quality-for-multiple-files" class="section level3" number="4.1.4">
 <h3><span class="header-section-number">4.1.4</span> Lets make plots to look at the quality for multiple files</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="dada2.html#cb6-1"></a><span class="kw">plotQualityProfile</span>(fnFs[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="dada2.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnFs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
 ## replace the existing scale.</code></pre>
 <p><img src="16sworkshop_files/figure-html/make_plots-1.png" width="672" /></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="dada2.html#cb8-1"></a>joint_fnames&lt;-<span class="kw">c</span>(<span class="kw">rbind</span>(fnFs,fnRs))</span>
-<span id="cb8-2"><a href="dada2.html#cb8-2"></a></span>
-<span id="cb8-3"><a href="dada2.html#cb8-3"></a><span class="kw">plotQualityProfile</span>(joint_fnames)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="dada2.html#cb8-1" aria-hidden="true" tabindex="-1"></a>joint_fnames<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">rbind</span>(fnFs,fnRs))</span>
+<span id="cb8-2"><a href="dada2.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="dada2.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(joint_fnames)</span></code></pre></div>
 <pre><code>## Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
 ## replace the existing scale.</code></pre>
 <p><img src="16sworkshop_files/figure-html/make_plots-2.png" width="672" /></p>
@@ -264,7 +288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>For the rest of the DADA2 pipelien please <a href="https://benjjneb.github.io/dada2/tutorial.html">visit</a></p>
 </div>
 </div>
-<div id="some-tips" class="section level2">
+<div id="some-tips" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Some tips:</h2>
 <ol style="list-style-type: decimal">
 <li><p>At every step check how many reads are getting filtered. This is very important to make sure that you are not losing too much data.</p></li>

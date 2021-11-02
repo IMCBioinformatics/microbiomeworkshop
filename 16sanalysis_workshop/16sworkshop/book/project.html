@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Project | 16s rRNA analysis workshop</title>
   <meta name="description" content="This tutorial covers workshop material for all three days" />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Project | 16s rRNA analysis workshop" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2020-06-18" />
+<meta name="date" content="2021-11-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="day-two.html"/>
 <link rel="next" href="what-next.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,25 +54,27 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -131,23 +134,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">16s rRNA Analysis Workshop</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#workshop-schedule"><i class="fa fa-check"></i><b>1.1</b> Workshop Schedule</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#important-links"><i class="fa fa-check"></i><b>1.2</b> Important links</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a><ul>
+<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="basic-information.html"><a href="basic-information.html#what-are-we-trying-to-achieve"><i class="fa fa-check"></i><b>2.1</b> What are we trying to achieve</a></li>
 <li class="chapter" data-level="2.2" data-path="basic-information.html"><a href="basic-information.html#basics-background"><i class="fa fa-check"></i><b>2.2</b> Basics &amp; Background</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a><ul>
-<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a><ul>
+<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="primer-removal.html"><a href="primer-removal.html#primer-removal-for-paired-end-reads"><i class="fa fa-check"></i><b>3.1.1</b> Primer removal for paired end reads</a></li>
 <li class="chapter" data-level="3.1.2" data-path="primer-removal.html"><a href="primer-removal.html#quality-trimming"><i class="fa fa-check"></i><b>3.1.2</b> Quality trimming</a></li>
 <li class="chapter" data-level="3.1.3" data-path="primer-removal.html"><a href="primer-removal.html#call-cutadapt-from-r"><i class="fa fa-check"></i><b>3.1.3</b> Call cutAdapt from R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a><ul>
-<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a><ul>
+<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="dada2.html"><a href="dada2.html#data-for-the-tutorial"><i class="fa fa-check"></i><b>4.1.1</b> Data for the tutorial</a></li>
 <li class="chapter" data-level="4.1.2" data-path="dada2.html"><a href="dada2.html#getting-ready-load-packages-and-get-file-list"><i class="fa fa-check"></i><b>4.1.2</b> Getting ready ( load packages and get file list)</a></li>
 <li class="chapter" data-level="4.1.3" data-path="dada2.html"><a href="dada2.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>4.1.3</b> Inspect read quality profiles</a></li>
@@ -155,20 +164,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="dada2.html"><a href="dada2.html#some-tips"><i class="fa fa-check"></i><b>4.2</b> Some tips:</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a><ul>
+<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="day-two.html"><a href="day-two.html#main-concepts-to-be-discussed"><i class="fa fa-check"></i><b>5.1</b> Main concepts to be discussed:</a></li>
 <li class="chapter" data-level="5.2" data-path="day-two.html"><a href="day-two.html#alpha-beta-diversity"><i class="fa fa-check"></i><b>5.2</b> Alpha &amp; beta Diversity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>6</b> Project</a><ul>
+<li class="chapter" data-level="6" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>6</b> Project</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="project.html"><a href="project.html#setup"><i class="fa fa-check"></i><b>6.1</b> Setup</a></li>
-<li class="chapter" data-level="6.2" data-path="project.html"><a href="project.html#task-1"><i class="fa fa-check"></i><b>6.2</b> Task 1</a><ul>
+<li class="chapter" data-level="6.2" data-path="project.html"><a href="project.html#task-1-ignore-this-task"><i class="fa fa-check"></i><b>6.2</b> Task 1 (Ignore this task)</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="project.html"><a href="project.html#cutadapt-1"><i class="fa fa-check"></i><b>6.2.1</b> Cutadapt</a></li>
 <li class="chapter" data-level="6.2.2" data-path="project.html"><a href="project.html#trimmomatic"><i class="fa fa-check"></i><b>6.2.2</b> Trimmomatic</a></li>
 <li class="chapter" data-level="6.2.3" data-path="project.html"><a href="project.html#primers-removed"><i class="fa fa-check"></i><b>6.2.3</b> Primers removed</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="project.html"><a href="project.html#task-2"><i class="fa fa-check"></i><b>6.3</b> Task 2</a></li>
 <li class="chapter" data-level="6.4" data-path="project.html"><a href="project.html#task-3"><i class="fa fa-check"></i><b>6.4</b> Task 3</a></li>
-<li class="chapter" data-level="6.5" data-path="project.html"><a href="project.html#project-solutions"><i class="fa fa-check"></i><b>6.5</b> Project solutions</a><ul>
+<li class="chapter" data-level="6.5" data-path="project.html"><a href="project.html#project-solutions"><i class="fa fa-check"></i><b>6.5</b> Project solutions</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="project.html"><a href="project.html#task-2---dada2"><i class="fa fa-check"></i><b>6.5.1</b> Task 2 - dada2</a></li>
 <li class="chapter" data-level="6.5.2" data-path="project.html"><a href="project.html#task-3---phyloseq"><i class="fa fa-check"></i><b>6.5.2</b> Task 3 - phyloseq</a></li>
 </ul></li>
@@ -194,18 +207,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="project" class="section level1">
+<div id="project" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Project</h1>
-<div id="setup" class="section level2">
+<div id="setup" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Setup</h2>
-<p>Please download the raw data <a href="https://www.dropbox.com/s/7sd7ipsswqcjxxj/raw_data.zip?dl=0">here</a>.</p>
+<p>Please download the raw data <a href="https://www.dropbox.com/sh/1oy9upgzxlsra9y/AAANkbCj36lvP6vEQucE7fYna?dl=0">here</a>.</p>
 <p>These samples are from a study looking at the effect of a prebiotic on the gut microbiota of children with type 1 diabetes. To invesigate this, the researchers took samples at three timepoints (baseline, 3 months, and 6 months) and sequenced the <strong>V3-V4</strong> region of the 16S rRNA gene.</p>
 </div>
-<div id="task-1" class="section level2">
-<h2><span class="header-section-number">6.2</span> Task 1</h2>
+<div id="task-1-ignore-this-task" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Task 1 (Ignore this task)</h2>
 <p>The first step with all sequence data is to ensure the primers have been removed. The two most common tools to accomplish this are <strong>Cutadapt</strong> and <strong>Trimmomatic</strong>.</p>
 <p>Note: both of these tools can be used for quality trimming as well as primer removal but here we will perform the quality trimming in dada2 instead.</p>
-<div id="cutadapt-1" class="section level3">
+<div id="cutadapt-1" class="section level3" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Cutadapt</h3>
 <p>You can find the documentation for this tool <a href="https://cutadapt.readthedocs.io/en/stable/">here</a>.</p>
 <p>These are the parameters that contain the primer sequences:</p>
@@ -224,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>cutadapt -g &lt;sequence&gt; -G &lt;sequence&gt; -a &lt;sequence&gt; -A &lt;sequence&gt; -o output_forward.fastq -p output_reverse.fastq input_forward.fastq input_reverse.fastq</code></pre>
 <p>Note that you can also run cutadapt from within R. You can find instructions on how to do that <a href="https://benjjneb.github.io/dada2/ITS_workflow.html">here</a>.</p>
 </div>
-<div id="trimmomatic" class="section level3">
+<div id="trimmomatic" class="section level3" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Trimmomatic</h3>
 <p>You can find the documentation for this tool <a href="http://www.usadellab.org/cms/?page=trimmomatic">here</a>.</p>
 <p>Instead of specifying forward and reverse reads, Trimmomatic takes a fasta file as input and searches the reads for all sequences in the files. When using Trimmomatic on paired-end reads, you will get four output files: forward and reverse reads that are still paired (reads for which both forward and reverse were kept) and forward and reverse reads that are unpaired. In general, the number of unpaired reads should be small and you can continue with your analysis without these.</p>
@@ -232,12 +245,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here is an example of how to execute Trimmomatic from the command line:</p>
 <pre><code>trimmomatic PE input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:v3v4primers.fa:2:30:10:2:keepBothReads LEADING:0 TRAILING:0 MINLEN:0</code></pre>
 </div>
-<div id="primers-removed" class="section level3">
+<div id="primers-removed" class="section level3" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> Primers removed</h3>
 <p>If you don’t care about using either of these tools and want to move on to the next step, you can find the sequences with the primers removed <a href="https://www.dropbox.com/s/qrf24anx9zllp9t/trimmed_data.zip?dl=0">here</a>.</p>
 </div>
 </div>
-<div id="task-2" class="section level2">
+<div id="task-2" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Task 2</h2>
 <p>Use the dada2 pipeline to generate a table of ASVs and a taxonomy table.</p>
 <ol style="list-style-type: decimal">
@@ -254,20 +267,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Save the ASV table and taxonomy table using the <code>saveRDS()</code> function.</li>
 </ol>
 </div>
-<div id="task-3" class="section level2">
+<div id="task-3" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> Task 3</h2>
-<p>Use the phyloseq package to generate do some basic analysis. For this section you will need the <a href="https://www.dropbox.com/s/htomvrgruy7am7a/project_metadata.txt?dl=0">metadata</a>.</p>
+<p>Use the phyloseq package to generate do some basic analysis. For this section you will need the project metadata files that you already downloaded</p>
 <ol style="list-style-type: decimal">
 <li>Generate a histogram of the number of reads per sample. Does this look okay?</li>
 <li>Generate a table of alpha diversity measures (Shannon, Simspon, and Chao1) and use this table to plot alpha diversity by treatment and timepoint.</li>
 <li>Transform the data to relative abundances and remove ASVs that are only present in less than 5% of the samples.</li>
-<li>Perform a principal component analysis (PCoA) using the <code>ordinate()</code> function and <code>distance = &quot;bray&quot;</code>. Plot beta diversity.</li>
+<li>Perform a principal component analysis (PCoA) using the <code>ordinate()</code> function and <code>distance = "bray"</code>. Plot beta diversity.</li>
 <li>Explore the composition of each sample by generating bar plots of the relative abundances at the level of phylum, family, and genus. For family and genus, plot only the top 10 most abundant taxa.</li>
 </ol>
 </div>
-<div id="project-solutions" class="section level2">
+<div id="project-solutions" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> Project solutions</h2>
-<div id="task-2---dada2" class="section level3">
+<div id="task-2---dada2" class="section level3" number="6.5.1">
 <h3><span class="header-section-number">6.5.1</span> Task 2 - dada2</h3>
 <p>For this section, the solution closely resembles the code from the <a href="http://benjjneb.github.io/dada2/tutorial.html">dada2 tutorial</a>. The main challenge is to determine the appropriate filtering parameters.</p>
 <p>Here are the quality profiles for the forward and reverse reads for samples 01MP-1 and 03KW-1. You can see that the quality of the ends of the reverse reads are much worse than the forward reads.</p>
@@ -280,95 +293,10 @@ To help guide our parameter choice, here is a plot showing the percentage of rea
 <p><img src="book/project_files/quality_filt_for_01MP-1.png" /></p>
 <p><img src="book/project_files/quality_filt_rev_01MP-1.png" /></p>
 </div>
-<div id="task-3---phyloseq" class="section level3">
+<div id="task-3---phyloseq" class="section level3" number="6.5.2">
 <h3><span class="header-section-number">6.5.2</span> Task 3 - phyloseq</h3>
 <p>Following the dada2 pipeline, we will have a sequence table and a taxonomy table.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">path &lt;-<span class="st"> &quot;./book/project_files/&quot;</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># Read in files</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">seqtab &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;seqtab.rds&quot;</span>))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">taxa &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;taxa.rds&quot;</span>))</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">info &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;project_metadata.txt&quot;</span>), <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># Match sample names</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">rownames</span>(info) &lt;-<span class="st"> </span><span class="kw">rownames</span>(seqtab)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co"># Make a phyloseq object</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">ps &lt;-<span class="st"> </span><span class="kw">phyloseq</span>(<span class="kw">otu_table</span>(seqtab, <span class="dt">taxa_are_rows=</span><span class="ot">FALSE</span>), <span class="kw">sample_data</span>(info), <span class="kw">tax_table</span>(taxa))</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co"># Make timepoint a factor</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw">sample_data</span>(ps)<span class="op">$</span>timepoint &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">sample_data</span>(ps)<span class="op">$</span>timepoint)</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## Histogram of reads per sample</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">sums &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">otu_table</span>(ps))</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">counts &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">as</span>(<span class="kw">sample_data</span>(ps), <span class="st">&quot;data.frame&quot;</span>), <span class="dt">totalreads =</span> sums)</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">qq &lt;-<span class="st"> </span><span class="kw">ggplot</span>(counts, <span class="kw">aes</span>(totalreads)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.02</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Read counts per sample&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_log10</span>()</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">qq</a></code></pre></div>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">## Alpha diversity</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## Make table of alpha diversity calculations</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">alpha &lt;-<span class="st"> </span><span class="kw">estimate_richness</span>(ps, <span class="dt">measures =</span> <span class="kw">c</span>(<span class="st">&quot;Chao1&quot;</span>, <span class="st">&quot;Shannon&quot;</span>, <span class="st">&quot;Simpson&quot;</span>))</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">alpha_info &lt;-<span class="st"> </span><span class="kw">sample_data</span>(ps)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">aa &lt;-<span class="st"> </span><span class="kw">cbind</span>(alpha, alpha_info)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">a0 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(aa, <span class="kw">aes</span>(<span class="dt">x =</span> treatment, <span class="dt">y =</span> Shannon, <span class="dt">fill =</span> timepoint)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.fill =</span> <span class="ot">NULL</span>, <span class="dt">outlier.shape =</span> <span class="dv">21</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.75</span>))</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">a0</a></code></pre></div>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## Beta diversity</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># transform to relative abundace</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">rel &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(ps, <span class="cf">function</span>(x) x <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(x))</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># filter out low prevalence ASVs</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">prevdf &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="dt">X =</span> <span class="kw">otu_table</span>(ps), <span class="dt">MARGIN =</span> <span class="kw">ifelse</span>(<span class="kw">taxa_are_rows</span>(ps), <span class="dt">yes =</span> <span class="dv">1</span>, <span class="dt">no =</span> <span class="dv">2</span>), <span class="dt">FUN =</span> <span class="cf">function</span>(x){<span class="kw">sum</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)})</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">prevdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">prevalence =</span> prevdf, <span class="dt">total_abundance =</span> <span class="kw">taxa_sums</span>(ps), <span class="kw">tax_table</span>(ps))</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">prevalence_threshold &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="op">*</span><span class="st"> </span><span class="kw">nsamples</span>(ps)</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">keeptaxa &lt;-<span class="st"> </span><span class="kw">rownames</span>(prevdf)[prevdf<span class="op">$</span>prevalence <span class="op">&gt;=</span><span class="st"> </span>prevalence_threshold]</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">relf &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(keeptaxa, rel)</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">psf &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(keeptaxa, ps)</a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">ord &lt;-<span class="st"> </span><span class="kw">ordinate</span>(relf, <span class="dt">method =</span> <span class="st">&quot;PCoA&quot;</span>, <span class="dt">distance =</span> <span class="st">&quot;bray&quot;</span>)</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">b0 &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(relf, ord, <span class="dt">shape =</span> <span class="st">&quot;treatment&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;timepoint&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw">theme_bw</span>()</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">b0</a></code></pre></div>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## Composition</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># Agglomerate to phylum, family, and genus level</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">phy &lt;-<span class="st"> </span><span class="kw">tax_glom</span>(relf, <span class="st">&quot;Phylum&quot;</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">fam &lt;-<span class="st"> </span><span class="kw">tax_glom</span>(relf, <span class="st">&quot;Family&quot;</span>)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">gen &lt;-<span class="st"> </span><span class="kw">tax_glom</span>(relf, <span class="st">&quot;Genus&quot;</span>)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">phymelt &lt;-<span class="st"> </span><span class="kw">psmelt</span>(phy)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">c0 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(phymelt, <span class="kw">aes</span>(sample_id, Abundance, <span class="dt">fill =</span> Phylum)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>treatment, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">c0</a></code></pre></div>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">top10 &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">sort</span>(<span class="kw">taxa_sums</span>(fam), <span class="ot">TRUE</span>))[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">fam10 &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(top10, fam)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">fammelt &lt;-<span class="st"> </span><span class="kw">psmelt</span>(fam10)</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">c1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(fammelt, <span class="kw">aes</span>(sample_id, Abundance, <span class="dt">fill =</span> Family)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>treatment, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">c1</a></code></pre></div>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-5.png" width="672" /></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">top10 &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">sort</span>(<span class="kw">taxa_sums</span>(gen), <span class="ot">TRUE</span>))[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">gen10 &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(top10, gen)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">genmelt &lt;-<span class="st"> </span><span class="kw">psmelt</span>(gen10)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">c2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(genmelt, <span class="kw">aes</span>(sample_id, Abundance, <span class="dt">fill =</span> Genus)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>treatment, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>)</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">c2</a></code></pre></div>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-6.png" width="672" /></p>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-1.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-2.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-3.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-4.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-5.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-6.png" width="672" /></p>
 
 </div>
 </div>

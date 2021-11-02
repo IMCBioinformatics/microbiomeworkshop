@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Day Two | 16s rRNA analysis workshop</title>
   <meta name="description" content="This tutorial covers workshop material for all three days" />
-  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Day Two | 16s rRNA analysis workshop" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2020-06-16" />
+<meta name="date" content="2021-11-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,8 @@
   
   
 <link rel="prev" href="dada2.html"/>
-<link rel="next" href="summary.html"/>
+<link rel="next" href="project.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,18 +54,18 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -133,23 +134,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">16s rRNA Analysis Workshop</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#workshop-schedule"><i class="fa fa-check"></i><b>1.1</b> Workshop Schedule</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#important-links"><i class="fa fa-check"></i><b>1.2</b> Important links</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a><ul>
+<li class="chapter" data-level="2" data-path="basic-information.html"><a href="basic-information.html"><i class="fa fa-check"></i><b>2</b> Basic Information</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="basic-information.html"><a href="basic-information.html#what-are-we-trying-to-achieve"><i class="fa fa-check"></i><b>2.1</b> What are we trying to achieve</a></li>
 <li class="chapter" data-level="2.2" data-path="basic-information.html"><a href="basic-information.html#basics-background"><i class="fa fa-check"></i><b>2.2</b> Basics &amp; Background</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a><ul>
-<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a><ul>
+<li class="chapter" data-level="3" data-path="primer-removal.html"><a href="primer-removal.html"><i class="fa fa-check"></i><b>3</b> Primer Removal</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="primer-removal.html"><a href="primer-removal.html#cutadapt"><i class="fa fa-check"></i><b>3.1</b> CutAdapt</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="primer-removal.html"><a href="primer-removal.html#primer-removal-for-paired-end-reads"><i class="fa fa-check"></i><b>3.1.1</b> Primer removal for paired end reads</a></li>
 <li class="chapter" data-level="3.1.2" data-path="primer-removal.html"><a href="primer-removal.html#quality-trimming"><i class="fa fa-check"></i><b>3.1.2</b> Quality trimming</a></li>
 <li class="chapter" data-level="3.1.3" data-path="primer-removal.html"><a href="primer-removal.html#call-cutadapt-from-r"><i class="fa fa-check"></i><b>3.1.3</b> Call cutAdapt from R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a><ul>
-<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a><ul>
+<li class="chapter" data-level="4" data-path="dada2.html"><a href="dada2.html"><i class="fa fa-check"></i><b>4</b> DADA2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dada2.html"><a href="dada2.html#dada2-pipeline-v1.2"><i class="fa fa-check"></i><b>4.1</b> DADA2 pipeline (v1.2)</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="dada2.html"><a href="dada2.html#data-for-the-tutorial"><i class="fa fa-check"></i><b>4.1.1</b> Data for the tutorial</a></li>
 <li class="chapter" data-level="4.1.2" data-path="dada2.html"><a href="dada2.html#getting-ready-load-packages-and-get-file-list"><i class="fa fa-check"></i><b>4.1.2</b> Getting ready ( load packages and get file list)</a></li>
 <li class="chapter" data-level="4.1.3" data-path="dada2.html"><a href="dada2.html#inspect-read-quality-profiles"><i class="fa fa-check"></i><b>4.1.3</b> Inspect read quality profiles</a></li>
@@ -157,11 +164,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="dada2.html"><a href="dada2.html#some-tips"><i class="fa fa-check"></i><b>4.2</b> Some tips:</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a><ul>
+<li class="chapter" data-level="5" data-path="day-two.html"><a href="day-two.html"><i class="fa fa-check"></i><b>5</b> Day Two</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="day-two.html"><a href="day-two.html#main-concepts-to-be-discussed"><i class="fa fa-check"></i><b>5.1</b> Main concepts to be discussed:</a></li>
 <li class="chapter" data-level="5.2" data-path="day-two.html"><a href="day-two.html#alpha-beta-diversity"><i class="fa fa-check"></i><b>5.2</b> Alpha &amp; beta Diversity</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
+<li class="chapter" data-level="6" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>6</b> Project</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="project.html"><a href="project.html#setup"><i class="fa fa-check"></i><b>6.1</b> Setup</a></li>
+<li class="chapter" data-level="6.2" data-path="project.html"><a href="project.html#task-1-ignore-this-task"><i class="fa fa-check"></i><b>6.2</b> Task 1 (Ignore this task)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="project.html"><a href="project.html#cutadapt-1"><i class="fa fa-check"></i><b>6.2.1</b> Cutadapt</a></li>
+<li class="chapter" data-level="6.2.2" data-path="project.html"><a href="project.html#trimmomatic"><i class="fa fa-check"></i><b>6.2.2</b> Trimmomatic</a></li>
+<li class="chapter" data-level="6.2.3" data-path="project.html"><a href="project.html#primers-removed"><i class="fa fa-check"></i><b>6.2.3</b> Primers removed</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="project.html"><a href="project.html#task-2"><i class="fa fa-check"></i><b>6.3</b> Task 2</a></li>
+<li class="chapter" data-level="6.4" data-path="project.html"><a href="project.html#task-3"><i class="fa fa-check"></i><b>6.4</b> Task 3</a></li>
+<li class="chapter" data-level="6.5" data-path="project.html"><a href="project.html#project-solutions"><i class="fa fa-check"></i><b>6.5</b> Project solutions</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="project.html"><a href="project.html#task-2---dada2"><i class="fa fa-check"></i><b>6.5.1</b> Task 2 - dada2</a></li>
+<li class="chapter" data-level="6.5.2" data-path="project.html"><a href="project.html#task-3---phyloseq"><i class="fa fa-check"></i><b>6.5.2</b> Task 3 - phyloseq</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="what-next.html"><a href="what-next.html"><i class="fa fa-check"></i><b>7</b> What Next?</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -183,9 +207,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="day-two" class="section level1">
+<div id="day-two" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Day Two</h1>
-<div id="main-concepts-to-be-discussed" class="section level2">
+<div id="main-concepts-to-be-discussed" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Main concepts to be discussed:</h2>
 <ul>
 <li>Finish dada2 pipeline</li>
@@ -197,8 +221,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Once we are finished using the dada2 package, we will have a sequence table and taxonomy table.</p>
 <p>Lets look at the metadata files we have to get more information about these samples.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="day-two.html#cb10-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb10-2"><a href="day-two.html#cb10-2"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="day-two.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="day-two.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
@@ -207,14 +231,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="day-two.html#cb14-1"></a>time_info&lt;-<span class="kw">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.time.design&quot;</span>,<span class="dt">sep  =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb14-2"><a href="day-two.html#cb14-2"></a>dpw_info&lt;-<span class="kw">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.dpw.metadata&quot;</span>,<span class="dt">sep  =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb14-3"><a href="day-two.html#cb14-3"></a></span>
-<span id="cb14-4"><a href="day-two.html#cb14-4"></a>sample_info&lt;-<span class="kw">left_join</span>(time_info,dpw_info,<span class="dt">by=</span><span class="st">&quot;group&quot;</span>)</span>
-<span id="cb14-5"><a href="day-two.html#cb14-5"></a></span>
-<span id="cb14-6"><a href="day-two.html#cb14-6"></a><span class="kw">rownames</span>(sample_info)&lt;-<span class="st"> </span>sample_info<span class="op">$</span>group</span>
-<span id="cb14-7"><a href="day-two.html#cb14-7"></a></span>
-<span id="cb14-8"><a href="day-two.html#cb14-8"></a>sample_info</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="day-two.html#cb14-1" aria-hidden="true" tabindex="-1"></a>time_info<span class="ot">&lt;-</span><span class="fu">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.time.design&quot;</span>,<span class="at">sep  =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb14-2"><a href="day-two.html#cb14-2" aria-hidden="true" tabindex="-1"></a>dpw_info<span class="ot">&lt;-</span><span class="fu">read.delim</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.dpw.metadata&quot;</span>,<span class="at">sep  =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb14-3"><a href="day-two.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="day-two.html#cb14-4" aria-hidden="true" tabindex="-1"></a>sample_info<span class="ot">&lt;-</span><span class="fu">left_join</span>(time_info,dpw_info,<span class="at">by=</span><span class="st">&quot;group&quot;</span>)</span>
+<span id="cb14-5"><a href="day-two.html#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="day-two.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sample_info)<span class="ot">&lt;-</span> sample_info<span class="sc">$</span>group</span>
+<span id="cb14-7"><a href="day-two.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="day-two.html#cb14-8" aria-hidden="true" tabindex="-1"></a>sample_info</span></code></pre></div>
 <pre><code>##         group  time dpw
 ## F3D0     F3D0 Early   0
 ## F3D1     F3D1 Early   1
@@ -237,15 +261,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## F3D9     F3D9 Early   9</code></pre>
 <p>Lets make a phyloseq object</p>
 <p>Now that we have sample_info lets try to make a phyloseq object out of this</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="day-two.html#cb16-1"></a><span class="kw">library</span>(phyloseq)</span>
-<span id="cb16-2"><a href="day-two.html#cb16-2"></a>taxa&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/taxa.rds&quot;</span>)</span>
-<span id="cb16-3"><a href="day-two.html#cb16-3"></a>seq&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/seq.rds&quot;</span>)</span>
-<span id="cb16-4"><a href="day-two.html#cb16-4"></a></span>
-<span id="cb16-5"><a href="day-two.html#cb16-5"></a>ps &lt;-<span class="st"> </span><span class="kw">phyloseq</span>(<span class="kw">otu_table</span>(seq,<span class="dt">taxa_are_rows =</span> F),</span>
-<span id="cb16-6"><a href="day-two.html#cb16-6"></a>               <span class="kw">sample_data</span>(sample_info),</span>
-<span id="cb16-7"><a href="day-two.html#cb16-7"></a>               <span class="kw">tax_table</span>(taxa))</span>
-<span id="cb16-8"><a href="day-two.html#cb16-8"></a></span>
-<span id="cb16-9"><a href="day-two.html#cb16-9"></a>ps</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="day-two.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phyloseq)</span>
+<span id="cb16-2"><a href="day-two.html#cb16-2" aria-hidden="true" tabindex="-1"></a>taxa<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/taxa.rds&quot;</span>)</span>
+<span id="cb16-3"><a href="day-two.html#cb16-3" aria-hidden="true" tabindex="-1"></a>seq<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">&quot;~/projects/16sanalysis_workshop/workshoptutorial/output/seq.rds&quot;</span>)</span>
+<span id="cb16-4"><a href="day-two.html#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="day-two.html#cb16-5" aria-hidden="true" tabindex="-1"></a>ps <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(<span class="fu">otu_table</span>(seq,<span class="at">taxa_are_rows =</span> F),</span>
+<span id="cb16-6"><a href="day-two.html#cb16-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sample_data</span>(sample_info),</span>
+<span id="cb16-7"><a href="day-two.html#cb16-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">tax_table</span>(taxa))</span>
+<span id="cb16-8"><a href="day-two.html#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="day-two.html#cb16-9" aria-hidden="true" tabindex="-1"></a>ps</span></code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 234 taxa and 19 samples ]
 ## sample_data() Sample Data:       [ 19 samples by 3 sample variables ]
@@ -261,19 +285,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>transform_sample_counts()</li>
 <li>psmelt()</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="day-two.html#cb18-1"></a>ps2&lt;-<span class="kw">tax_glom</span>(ps,<span class="dt">taxrank =</span> <span class="st">&quot;Phylum&quot;</span>)</span>
-<span id="cb18-2"><a href="day-two.html#cb18-2"></a>ps2 =<span class="st"> </span><span class="kw">transform_sample_counts</span>(ps2, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x))</span>
-<span id="cb18-3"><a href="day-two.html#cb18-3"></a>pmelt&lt;-<span class="kw">psmelt</span>(ps2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Abundance))</span>
-<span id="cb18-4"><a href="day-two.html#cb18-4"></a></span>
-<span id="cb18-5"><a href="day-two.html#cb18-5"></a>cutoff&lt;-<span class="fl">0.005</span></span>
-<span id="cb18-6"><a href="day-two.html#cb18-6"></a>pmelt_filt&lt;-pmelt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Phylum,time) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">sum</span>(Abundance) <span class="op">&gt;</span>cutoff)</span>
-<span id="cb18-7"><a href="day-two.html#cb18-7"></a></span>
-<span id="cb18-8"><a href="day-two.html#cb18-8"></a><span class="kw">ggplot</span>(pmelt_filt,<span class="kw">aes</span>(<span class="dt">x=</span>Sample,<span class="dt">y=</span>Abundance,<span class="dt">color=</span>Phylum,<span class="dt">fill=</span>Phylum)) <span class="op">+</span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="day-two.html#cb18-1" aria-hidden="true" tabindex="-1"></a>ps2<span class="ot">&lt;-</span><span class="fu">tax_glom</span>(ps,<span class="at">taxrank =</span> <span class="st">&quot;Phylum&quot;</span>)</span>
+<span id="cb18-2"><a href="day-two.html#cb18-2" aria-hidden="true" tabindex="-1"></a>ps2 <span class="ot">=</span> <span class="fu">transform_sample_counts</span>(ps2, <span class="cf">function</span>(x) x<span class="sc">/</span><span class="fu">sum</span>(x))</span>
+<span id="cb18-3"><a href="day-two.html#cb18-3" aria-hidden="true" tabindex="-1"></a>pmelt<span class="ot">&lt;-</span><span class="fu">psmelt</span>(ps2) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Abundance))</span>
+<span id="cb18-4"><a href="day-two.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="day-two.html#cb18-5" aria-hidden="true" tabindex="-1"></a>cutoff<span class="ot">&lt;-</span><span class="fl">0.005</span></span>
+<span id="cb18-6"><a href="day-two.html#cb18-6" aria-hidden="true" tabindex="-1"></a>pmelt_filt<span class="ot">&lt;-</span>pmelt <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Phylum,time) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">sum</span>(Abundance) <span class="sc">&gt;</span>cutoff)</span>
+<span id="cb18-7"><a href="day-two.html#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="day-two.html#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pmelt_filt,<span class="fu">aes</span>(<span class="at">x=</span>Sample,<span class="at">y=</span>Abundance,<span class="at">color=</span>Phylum,<span class="at">fill=</span>Phylum)) <span class="sc">+</span><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="16sworkshop_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="day-two.html#cb19-1"></a>pmelt_filt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(time,Phylum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean_Abundance=</span><span class="kw">mean</span>(Abundance)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(.,<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>mean_Abundance,<span class="dt">fill=</span>Phylum)) <span class="op">+</span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="day-two.html#cb19-1" aria-hidden="true" tabindex="-1"></a>pmelt_filt <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(time,Phylum) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean_Abundance=</span><span class="fu">mean</span>(Abundance)) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(.,<span class="fu">aes</span>(<span class="at">x=</span>time,<span class="at">y=</span>mean_Abundance,<span class="at">fill=</span>Phylum)) <span class="sc">+</span><span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;time&#39;. You can override using the `.groups` argument.</code></pre>
 <p><img src="16sworkshop_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <p>Figure out how to change the colors to custom colors!!</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="day-two.html#cb20-1"></a>pmelt_filt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(time,Phylum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(Abundance))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="day-two.html#cb21-1" aria-hidden="true" tabindex="-1"></a>pmelt_filt <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(time,Phylum) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(Abundance))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;time&#39;. You can override using the `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 12 x 3
 ## # Groups:   time [2]
 ##    time  Phylum              mean
@@ -291,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 11 Late  Patescibacteria 0.000993
 ## 12 Late  Tenericutes     0.00845</code></pre>
 </div>
-<div id="alpha-beta-diversity" class="section level2">
+<div id="alpha-beta-diversity" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Alpha &amp; beta Diversity</h2>
 <p><img src="16sworkshop_files/figure-html/alpha%20diversit-1.png" width="672" /></p>
 <p><img src="16sworkshop_files/figure-html/unnamed-chunk-3-1.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
@@ -304,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="dada2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

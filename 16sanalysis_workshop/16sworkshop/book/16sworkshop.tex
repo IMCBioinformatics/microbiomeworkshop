@@ -4,8 +4,8 @@
 %
 \documentclass[
 ]{book}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
@@ -81,7 +81,8 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
 \makeatletter
@@ -90,7 +91,7 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -108,12 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
 \title{16s rRNA analysis workshop}
 \author{Hena R. Ramay}
-\date{2020-06-16}
+\date{2021-11-01}
 
 \begin{document}
 \maketitle
@@ -256,14 +260,14 @@ In paired-end mode, the options -a, -b, -g and -u that also exist in single-end 
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-Single-end/R1 option & Corresponding option for R2\tabularnewline
+Single-end/R1 option & Corresponding option for R2 \\
 \midrule
 \endhead
---adapter, -a & -A\tabularnewline
---front, -g & -G\tabularnewline
---anywhere, -b & -B\tabularnewline
---cut, -u & -U\tabularnewline
---output, -o & --paired-output, -p\tabularnewline
+--adapter, -a & -A \\
+--front, -g & -G \\
+--anywhere, -b & -B \\
+--cut, -u & -U \\
+--output, -o & --paired-output, -p \\
 \bottomrule
 \end{longtable}
 
@@ -323,10 +327,19 @@ Read in files
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dada2);}
-\KeywordTok{library}\NormalTok{(limma)}
-\NormalTok{path <-}\StringTok{ "MiSeq_SOP/"}
-\KeywordTok{list.files}\NormalTok{(path)}
+\FunctionTok{library}\NormalTok{(dada2);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Rcpp
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(limma)}
+\NormalTok{path }\OtherTok{\textless{}{-}} \StringTok{"MiSeq\_SOP/"}
+\FunctionTok{list.files}\NormalTok{(path)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -358,18 +371,18 @@ Read in files
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq}
-\NormalTok{fnFs <-}\StringTok{ }\KeywordTok{sort}\NormalTok{(}\KeywordTok{list.files}\NormalTok{(path, }\DataTypeTok{pattern=}\StringTok{"_R1_001.fastq"}\NormalTok{, }\DataTypeTok{full.names =} \OtherTok{TRUE}\NormalTok{))}
-\NormalTok{fnRs <-}\StringTok{ }\KeywordTok{sort}\NormalTok{(}\KeywordTok{list.files}\NormalTok{(path, }\DataTypeTok{pattern=}\StringTok{"_R2_001.fastq"}\NormalTok{, }\DataTypeTok{full.names =} \OtherTok{TRUE}\NormalTok{))}
-\CommentTok{# Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq}
+\CommentTok{\# Forward and reverse fastq filenames have format: SAMPLENAME\_R1\_001.fastq and SAMPLENAME\_R2\_001.fastq}
+\NormalTok{fnFs }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{list.files}\NormalTok{(path, }\AttributeTok{pattern=}\StringTok{"\_R1\_001.fastq"}\NormalTok{, }\AttributeTok{full.names =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{fnRs }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{list.files}\NormalTok{(path, }\AttributeTok{pattern=}\StringTok{"\_R2\_001.fastq"}\NormalTok{, }\AttributeTok{full.names =} \ConstantTok{TRUE}\NormalTok{))}
+\CommentTok{\# Extract sample names, assuming filenames have format: SAMPLENAME\_XXX.fastq}
 
 
-\NormalTok{tmp<-}\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{basename}\NormalTok{(fnFs), }\StringTok{"_"}\NormalTok{)}
+\NormalTok{tmp}\OtherTok{\textless{}{-}}\FunctionTok{strsplit}\NormalTok{(}\FunctionTok{basename}\NormalTok{(fnFs), }\StringTok{"\_"}\NormalTok{)}
 
 
-\CommentTok{# As tmp is a list of vectors, we will have to use sapply function to get the first position out from each vector. The symbol '[' tells sapplly function that it is a vector and 1 specifies the vector index}
+\CommentTok{\# As tmp is a list of vectors, we will have to use sapply function to get the first position out from each vector. The symbol \textquotesingle{}[\textquotesingle{} tells sapplly function that it is a vector and 1 specifies the vector index}
 
-\NormalTok{samples.names<-}\KeywordTok{sapply}\NormalTok{(tmp,}\StringTok{'['}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{samples.names}\OtherTok{\textless{}{-}}\FunctionTok{sapply}\NormalTok{(tmp,}\StringTok{\textquotesingle{}[\textquotesingle{}}\NormalTok{,}\DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -378,7 +391,7 @@ Read in files
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plotQualityProfile}\NormalTok{(fnFs[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{])}
+\FunctionTok{plotQualityProfile}\NormalTok{(fnFs[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -391,9 +404,9 @@ Read in files
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{joint_fnames<-}\KeywordTok{c}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(fnFs,fnRs))}
+\NormalTok{joint\_fnames}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(fnFs,fnRs))}
 
-\KeywordTok{plotQualityProfile}\NormalTok{(joint_fnames)}
+\FunctionTok{plotQualityProfile}\NormalTok{(joint\_fnames)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -461,16 +474,38 @@ Lets look at the metadata files we have to get more information about these samp
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\KeywordTok{library}\NormalTok{(dplyr)}
-\NormalTok{time_info<-}\KeywordTok{read.delim}\NormalTok{(}\StringTok{"~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.time.design"}\NormalTok{,}\DataTypeTok{sep  =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
-\NormalTok{dpw_info<-}\KeywordTok{read.delim}\NormalTok{(}\StringTok{"~/projects/16sanalysis_workshop/workshoptutorial/MiSeq_SOP/mouse.dpw.metadata"}\NormalTok{,}\DataTypeTok{sep  =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
 
-\NormalTok{sample_info<-}\KeywordTok{left_join}\NormalTok{(time_info,dpw_info,}\DataTypeTok{by=}\StringTok{"group"}\NormalTok{)}
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
 
-\KeywordTok{rownames}\NormalTok{(sample_info)<-}\StringTok{ }\NormalTok{sample_info}\OperatorTok{$}\NormalTok{group}
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
 
-\NormalTok{sample_info}
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{time\_info}\OtherTok{\textless{}{-}}\FunctionTok{read.delim}\NormalTok{(}\StringTok{"\textasciitilde{}/projects/16sanalysis\_workshop/workshoptutorial/MiSeq\_SOP/mouse.time.design"}\NormalTok{,}\AttributeTok{sep  =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{dpw\_info}\OtherTok{\textless{}{-}}\FunctionTok{read.delim}\NormalTok{(}\StringTok{"\textasciitilde{}/projects/16sanalysis\_workshop/workshoptutorial/MiSeq\_SOP/mouse.dpw.metadata"}\NormalTok{,}\AttributeTok{sep  =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+
+\NormalTok{sample\_info}\OtherTok{\textless{}{-}}\FunctionTok{left\_join}\NormalTok{(time\_info,dpw\_info,}\AttributeTok{by=}\StringTok{"group"}\NormalTok{)}
+
+\FunctionTok{rownames}\NormalTok{(sample\_info)}\OtherTok{\textless{}{-}}\NormalTok{ sample\_info}\SpecialCharTok{$}\NormalTok{group}
+
+\NormalTok{sample\_info}
 \end{Highlighting}
 \end{Shaded}
 
@@ -503,13 +538,13 @@ Now that we have sample\_info lets try to make a phyloseq object out of this
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(phyloseq)}
-\NormalTok{taxa<-}\KeywordTok{readRDS}\NormalTok{(}\StringTok{"~/projects/16sanalysis_workshop/workshoptutorial/output/taxa.rds"}\NormalTok{)}
-\NormalTok{seq<-}\KeywordTok{readRDS}\NormalTok{(}\StringTok{"~/projects/16sanalysis_workshop/workshoptutorial/output/seq.rds"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(phyloseq)}
+\NormalTok{taxa}\OtherTok{\textless{}{-}}\FunctionTok{readRDS}\NormalTok{(}\StringTok{"\textasciitilde{}/projects/16sanalysis\_workshop/workshoptutorial/output/taxa.rds"}\NormalTok{)}
+\NormalTok{seq}\OtherTok{\textless{}{-}}\FunctionTok{readRDS}\NormalTok{(}\StringTok{"\textasciitilde{}/projects/16sanalysis\_workshop/workshoptutorial/output/seq.rds"}\NormalTok{)}
 
-\NormalTok{ps <-}\StringTok{ }\KeywordTok{phyloseq}\NormalTok{(}\KeywordTok{otu_table}\NormalTok{(seq,}\DataTypeTok{taxa_are_rows =}\NormalTok{ F),}
-               \KeywordTok{sample_data}\NormalTok{(sample_info),}
-               \KeywordTok{tax_table}\NormalTok{(taxa))}
+\NormalTok{ps }\OtherTok{\textless{}{-}} \FunctionTok{phyloseq}\NormalTok{(}\FunctionTok{otu\_table}\NormalTok{(seq,}\AttributeTok{taxa\_are\_rows =}\NormalTok{ F),}
+               \FunctionTok{sample\_data}\NormalTok{(sample\_info),}
+               \FunctionTok{tax\_table}\NormalTok{(taxa))}
 
 \NormalTok{ps}
 \end{Highlighting}
@@ -546,14 +581,14 @@ Take a look at:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ps2<-}\KeywordTok{tax_glom}\NormalTok{(ps,}\DataTypeTok{taxrank =} \StringTok{"Phylum"}\NormalTok{)}
-\NormalTok{ps2 =}\StringTok{ }\KeywordTok{transform_sample_counts}\NormalTok{(ps2, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(x))}
-\NormalTok{pmelt<-}\KeywordTok{psmelt}\NormalTok{(ps2) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(Abundance))}
+\NormalTok{ps2}\OtherTok{\textless{}{-}}\FunctionTok{tax\_glom}\NormalTok{(ps,}\AttributeTok{taxrank =} \StringTok{"Phylum"}\NormalTok{)}
+\NormalTok{ps2 }\OtherTok{=} \FunctionTok{transform\_sample\_counts}\NormalTok{(ps2, }\ControlFlowTok{function}\NormalTok{(x) x}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(x))}
+\NormalTok{pmelt}\OtherTok{\textless{}{-}}\FunctionTok{psmelt}\NormalTok{(ps2) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Abundance))}
 
-\NormalTok{cutoff<-}\FloatTok{0.005}
-\NormalTok{pmelt_filt<-pmelt }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Phylum,time) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Abundance) }\OperatorTok{>}\NormalTok{cutoff)}
+\NormalTok{cutoff}\OtherTok{\textless{}{-}}\FloatTok{0.005}
+\NormalTok{pmelt\_filt}\OtherTok{\textless{}{-}}\NormalTok{pmelt }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Phylum,time) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\FunctionTok{sum}\NormalTok{(Abundance) }\SpecialCharTok{\textgreater{}}\NormalTok{cutoff)}
 
-\KeywordTok{ggplot}\NormalTok{(pmelt_filt,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Sample,}\DataTypeTok{y=}\NormalTok{Abundance,}\DataTypeTok{color=}\NormalTok{Phylum,}\DataTypeTok{fill=}\NormalTok{Phylum)) }\OperatorTok{+}\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(pmelt\_filt,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sample,}\AttributeTok{y=}\NormalTok{Abundance,}\AttributeTok{color=}\NormalTok{Phylum,}\AttributeTok{fill=}\NormalTok{Phylum)) }\SpecialCharTok{+}\FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -561,9 +596,13 @@ Take a look at:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pmelt_filt }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(time,Phylum) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_Abundance=}\KeywordTok{mean}\NormalTok{(Abundance)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(.,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{time,}\DataTypeTok{y=}\NormalTok{mean_Abundance,}\DataTypeTok{fill=}\NormalTok{Phylum)) }\OperatorTok{+}\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{"identity"}\NormalTok{)}
+\NormalTok{pmelt\_filt }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(time,Phylum) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_Abundance=}\FunctionTok{mean}\NormalTok{(Abundance)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(.,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{time,}\AttributeTok{y=}\NormalTok{mean\_Abundance,}\AttributeTok{fill=}\NormalTok{Phylum)) }\SpecialCharTok{+}\FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'time'. You can override using the `.groups` argument.
+\end{verbatim}
 
 \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-2-2.pdf}
 
@@ -571,9 +610,13 @@ Figure out how to change the colors to custom colors!!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pmelt_filt }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(time,Phylum) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean=}\KeywordTok{mean}\NormalTok{(Abundance))}
+\NormalTok{pmelt\_filt }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(time,Phylum) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(Abundance))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'time'. You can override using the `.groups` argument.
+\end{verbatim}
 
 \begin{verbatim}
 ## # A tibble: 12 x 3
@@ -601,8 +644,162 @@ Figure out how to change the colors to custom colors!!
 
 \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-1.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-2.pdf}
 
-\hypertarget{summary}{%
-\chapter{Summary}\label{summary}}
+\hypertarget{project}{%
+\chapter{Project}\label{project}}
+
+\hypertarget{setup}{%
+\section{Setup}\label{setup}}
+
+Please download the raw data \href{https://www.dropbox.com/sh/1oy9upgzxlsra9y/AAANkbCj36lvP6vEQucE7fYna?dl=0}{here}.
+
+These samples are from a study looking at the effect of a prebiotic on the gut microbiota of children with type 1 diabetes. To invesigate this, the researchers took samples at three timepoints (baseline, 3 months, and 6 months) and sequenced the \textbf{V3-V4} region of the 16S rRNA gene.
+
+\hypertarget{task-1-ignore-this-task}{%
+\section{Task 1 (Ignore this task)}\label{task-1-ignore-this-task}}
+
+The first step with all sequence data is to ensure the primers have been removed. The two most common tools to accomplish this are \textbf{Cutadapt} and \textbf{Trimmomatic}.
+
+Note: both of these tools can be used for quality trimming as well as primer removal but here we will perform the quality trimming in dada2 instead.
+
+\hypertarget{cutadapt-1}{%
+\subsection{Cutadapt}\label{cutadapt-1}}
+
+You can find the documentation for this tool \href{https://cutadapt.readthedocs.io/en/stable/}{here}.
+
+These are the parameters that contain the primer sequences:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{-g\ :\ forward\ primer}
+\item
+  \texttt{-G\ :\ reverse\ primer}
+\item
+  \texttt{-a\ :\ reverse\ primer,\ reverse\ complement}
+\item
+  \texttt{-A\ :\ forward\ primer,\ reverse\ complement}
+\end{itemize}
+
+For this dataset, these are the appropriate primers:
+
+\begin{verbatim}
+-g TCGTCGGCAGCGTCAGATGTGTATAAGAGACAGCCTACGGGNGGCWGCAG
+-G GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAGGACTACHVGGGTATCTAATCC
+-a GGATTAGATACCCBDGTAGTCCTGTCTCTTATACACATCTCCGAGCCCACGAGAC
+-A CTGCWGCCNCCCGTAGGCTGTCTCTTATACACATCTGACGCTGCCGACGA
+\end{verbatim}
+
+Here is an example of how to execute Cutadapt from the command line:
+
+\begin{verbatim}
+cutadapt -g <sequence> -G <sequence> -a <sequence> -A <sequence> -o output_forward.fastq -p output_reverse.fastq input_forward.fastq input_reverse.fastq
+\end{verbatim}
+
+Note that you can also run cutadapt from within R. You can find instructions on how to do that \href{https://benjjneb.github.io/dada2/ITS_workflow.html}{here}.
+
+\hypertarget{trimmomatic}{%
+\subsection{Trimmomatic}\label{trimmomatic}}
+
+You can find the documentation for this tool \href{http://www.usadellab.org/cms/?page=trimmomatic}{here}.
+
+Instead of specifying forward and reverse reads, Trimmomatic takes a fasta file as input and searches the reads for all sequences in the files. When using Trimmomatic on paired-end reads, you will get four output files: forward and reverse reads that are still paired (reads for which both forward and reverse were kept) and forward and reverse reads that are unpaired. In general, the number of unpaired reads should be small and you can continue with your analysis without these.
+
+For this dataset, you can use \href{https://www.dropbox.com/s/wc2kihxfep23ycw/v3v4primers.fa?dl=0}{this fasta}.
+
+Here is an example of how to execute Trimmomatic from the command line:
+
+\begin{verbatim}
+trimmomatic PE input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:v3v4primers.fa:2:30:10:2:keepBothReads LEADING:0 TRAILING:0 MINLEN:0
+\end{verbatim}
+
+\hypertarget{primers-removed}{%
+\subsection{Primers removed}\label{primers-removed}}
+
+If you don't care about using either of these tools and want to move on to the next step, you can find the sequences with the primers removed \href{https://www.dropbox.com/s/qrf24anx9zllp9t/trimmed_data.zip?dl=0}{here}.
+
+\hypertarget{task-2}{%
+\section{Task 2}\label{task-2}}
+
+Use the dada2 pipeline to generate a table of ASVs and a taxonomy table.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Plot quality profiles of the reads for all samples. Save these as pdf files.
+\item
+  Try a couple of sets of filtering params and determine the best choice.
+\item
+  Filter and trim the data and generate the quality plots again. Save these as well.
+\item
+  Learn the error rates and visually inspect the estimated error rates.
+\item
+  Infer samples.
+\item
+  Merge paired reads.
+\item
+  Construct sequence table.
+\item
+  Remove chimeras.
+\item
+  Track reads through the pipeline and ensure that no step of the analysis removed a large/unreasonable proportion of the reads.
+\item
+  Assign taxonomy using the Silva databse.
+\item
+  Save the ASV table and taxonomy table using the \texttt{saveRDS()} function.
+\end{enumerate}
+
+\hypertarget{task-3}{%
+\section{Task 3}\label{task-3}}
+
+Use the phyloseq package to generate do some basic analysis. For this section you will need the project metadata files that you already downloaded
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Generate a histogram of the number of reads per sample. Does this look okay?
+\item
+  Generate a table of alpha diversity measures (Shannon, Simspon, and Chao1) and use this table to plot alpha diversity by treatment and timepoint.
+\item
+  Transform the data to relative abundances and remove ASVs that are only present in less than 5\% of the samples.
+\item
+  Perform a principal component analysis (PCoA) using the \texttt{ordinate()} function and \texttt{distance\ =\ "bray"}. Plot beta diversity.
+\item
+  Explore the composition of each sample by generating bar plots of the relative abundances at the level of phylum, family, and genus. For family and genus, plot only the top 10 most abundant taxa.
+\end{enumerate}
+
+\hypertarget{project-solutions}{%
+\section{Project solutions}\label{project-solutions}}
+
+\hypertarget{task-2---dada2}{%
+\subsection{Task 2 - dada2}\label{task-2---dada2}}
+
+For this section, the solution closely resembles the code from the \href{http://benjjneb.github.io/dada2/tutorial.html}{dada2 tutorial}. The main challenge is to determine the appropriate filtering parameters.
+
+Here are the quality profiles for the forward and reverse reads for samples 01MP-1 and 03KW-1. You can see that the quality of the ends of the reverse reads are much worse than the forward reads.
+
+\includegraphics{book/project_files/quality_01MP-1.png}
+
+\includegraphics{book/project_files/quality_03KW-1.png}
+To help guide our parameter choice, here is a plot showing the percentage of reads that passed filtering as a produce of changing both the forward error rate and the reverse error rate.
+
+\includegraphics[width=10.93in]{book/project_files/filt_params}
+
+Based on this, we should choose an error rate of \texttt{c(3,4)} or something similar. Note that the truncation length used here was \texttt{c(265,245)}.
+
+After filtering, we look the effect of the filtering on the quality profiles. Below are the before and after filtering quality profiles of the forward and reverse reads of sample 01MP-1.
+
+\includegraphics{book/project_files/quality_filt_for_01MP-1.png}
+
+\includegraphics{book/project_files/quality_filt_rev_01MP-1.png}
+
+\hypertarget{task-3---phyloseq}{%
+\subsection{Task 3 - phyloseq}\label{task-3---phyloseq}}
+
+Following the dada2 pipeline, we will have a sequence table and a taxonomy table.
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-1.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-2.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-3.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-4.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-5.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-6.pdf}
 
 \hypertarget{what-next}{%
 \chapter{What Next?}\label{what-next}}
