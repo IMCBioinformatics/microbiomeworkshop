@@ -79,7 +79,7 @@ Use the dada2 pipeline to generate a table of ASVs and a taxonomy table.
 Use the phyloseq package to generate do some basic analysis. For this section you will need the project metadata files that you already downloaded
 
 1. Generate a histogram of the number of reads per sample. Does this look okay?
-2. Generate a table of alpha diversity measures (Shannon, Simspon, and Chao1) and use this table to plot alpha diversity by treatment and timepoint.
+2. Generate a table of alpha diversity measures  (Shannon, Simspon, and Chao1) and use this table to plot alpha diversity by treatment and timepoint.
 3. Transform the data to relative abundances and remove ASVs that are only present in less than 5% of the samples. 
 4. Perform a principal component analysis (PCoA) using the `ordinate()` function and `distance = "bray"`. Plot beta diversity.
 5. Explore the composition of each sample by generating bar plots of the relative abundances at the level of phylum, family, and genus. For family and genus, plot only the top 10 most abundant taxa. 
