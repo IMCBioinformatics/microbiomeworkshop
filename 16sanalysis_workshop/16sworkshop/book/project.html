@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2021-11-02" />
+<meta name="date" content="2021-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -296,7 +296,92 @@ To help guide our parameter choice, here is a plot showing the percentage of rea
 <div id="task-3---phyloseq" class="section level3" number="6.5.2">
 <h3><span class="header-section-number">6.5.2</span> Task 3 - phyloseq</h3>
 <p>Following the dada2 pipeline, we will have a sequence table and a taxonomy table.</p>
-<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-1.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-2.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-3.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-4.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-5.png" width="672" /><img src="16sworkshop_files/figure-html/unnamed-chunk-6-6.png" width="672" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="project.html#cb27-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;./book/project_files/&quot;</span></span>
+<span id="cb27-2"><a href="project.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="project.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in files</span></span>
+<span id="cb27-4"><a href="project.html#cb27-4" aria-hidden="true" tabindex="-1"></a>seqtab <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(path, <span class="st">&quot;seqtab.rds&quot;</span>))</span>
+<span id="cb27-5"><a href="project.html#cb27-5" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(path, <span class="st">&quot;taxa.rds&quot;</span>))</span>
+<span id="cb27-6"><a href="project.html#cb27-6" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">file.path</span>(path, <span class="st">&quot;project_metadata.txt&quot;</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-7"><a href="project.html#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="project.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Match sample names</span></span>
+<span id="cb27-9"><a href="project.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(info) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(seqtab)</span>
+<span id="cb27-10"><a href="project.html#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="project.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a phyloseq object</span></span>
+<span id="cb27-12"><a href="project.html#cb27-12" aria-hidden="true" tabindex="-1"></a>ps <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(<span class="fu">otu_table</span>(seqtab, <span class="at">taxa_are_rows=</span><span class="cn">FALSE</span>), <span class="fu">sample_data</span>(info), <span class="fu">tax_table</span>(taxa))</span>
+<span id="cb27-13"><a href="project.html#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="project.html#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Make timepoint a factor</span></span>
+<span id="cb27-15"><a href="project.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_data</span>(ps)<span class="sc">$</span>timepoint <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">sample_data</span>(ps)<span class="sc">$</span>timepoint)</span>
+<span id="cb27-16"><a href="project.html#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="project.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Histogram of reads per sample</span></span>
+<span id="cb27-18"><a href="project.html#cb27-18" aria-hidden="true" tabindex="-1"></a>sums <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">otu_table</span>(ps))</span>
+<span id="cb27-19"><a href="project.html#cb27-19" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">as</span>(<span class="fu">sample_data</span>(ps), <span class="st">&quot;data.frame&quot;</span>), <span class="at">totalreads =</span> sums)</span>
+<span id="cb27-20"><a href="project.html#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="project.html#cb27-21" aria-hidden="true" tabindex="-1"></a>qq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(counts, <span class="fu">aes</span>(totalreads)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.02</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Read counts per sample&quot;</span>) <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span>
+<span id="cb27-22"><a href="project.html#cb27-22" aria-hidden="true" tabindex="-1"></a>qq</span></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="project.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alpha diversity</span></span>
+<span id="cb28-2"><a href="project.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="project.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Make table of alpha diversity calculations</span></span>
+<span id="cb28-4"><a href="project.html#cb28-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">estimate_richness</span>(ps, <span class="at">measures =</span> <span class="fu">c</span>(<span class="st">&quot;Chao1&quot;</span>, <span class="st">&quot;Shannon&quot;</span>, <span class="st">&quot;Simpson&quot;</span>))</span>
+<span id="cb28-5"><a href="project.html#cb28-5" aria-hidden="true" tabindex="-1"></a>alpha_info <span class="ot">&lt;-</span> <span class="fu">sample_data</span>(ps)</span>
+<span id="cb28-6"><a href="project.html#cb28-6" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">&lt;-</span> <span class="fu">cbind</span>(alpha, alpha_info)</span>
+<span id="cb28-7"><a href="project.html#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="project.html#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="project.html#cb28-9" aria-hidden="true" tabindex="-1"></a>a0 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(aa, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> Shannon, <span class="at">fill =</span> timepoint)) <span class="sc">+</span></span>
+<span id="cb28-10"><a href="project.html#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.fill =</span> <span class="cn">NULL</span>, <span class="at">outlier.shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb28-11"><a href="project.html#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb28-12"><a href="project.html#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.75</span>))</span>
+<span id="cb28-13"><a href="project.html#cb28-13" aria-hidden="true" tabindex="-1"></a>a0</span></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="project.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Beta diversity</span></span>
+<span id="cb29-2"><a href="project.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="project.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># transform to relative abundace</span></span>
+<span id="cb29-4"><a href="project.html#cb29-4" aria-hidden="true" tabindex="-1"></a>rel <span class="ot">&lt;-</span> <span class="fu">transform_sample_counts</span>(ps, <span class="cf">function</span>(x) x <span class="sc">/</span> <span class="fu">sum</span>(x))</span>
+<span id="cb29-5"><a href="project.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out low prevalence ASVs</span></span>
+<span id="cb29-6"><a href="project.html#cb29-6" aria-hidden="true" tabindex="-1"></a>prevdf <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> <span class="fu">otu_table</span>(ps), <span class="at">MARGIN =</span> <span class="fu">ifelse</span>(<span class="fu">taxa_are_rows</span>(ps), <span class="at">yes =</span> <span class="dv">1</span>, <span class="at">no =</span> <span class="dv">2</span>), <span class="at">FUN =</span> <span class="cf">function</span>(x){<span class="fu">sum</span>(x <span class="sc">&gt;</span> <span class="dv">0</span>)})</span>
+<span id="cb29-7"><a href="project.html#cb29-7" aria-hidden="true" tabindex="-1"></a>prevdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">prevalence =</span> prevdf, <span class="at">total_abundance =</span> <span class="fu">taxa_sums</span>(ps), <span class="fu">tax_table</span>(ps))</span>
+<span id="cb29-8"><a href="project.html#cb29-8" aria-hidden="true" tabindex="-1"></a>prevalence_threshold <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="sc">*</span> <span class="fu">nsamples</span>(ps)</span>
+<span id="cb29-9"><a href="project.html#cb29-9" aria-hidden="true" tabindex="-1"></a>keeptaxa <span class="ot">&lt;-</span> <span class="fu">rownames</span>(prevdf)[prevdf<span class="sc">$</span>prevalence <span class="sc">&gt;=</span> prevalence_threshold]</span>
+<span id="cb29-10"><a href="project.html#cb29-10" aria-hidden="true" tabindex="-1"></a>relf <span class="ot">&lt;-</span> <span class="fu">prune_taxa</span>(keeptaxa, rel)</span>
+<span id="cb29-11"><a href="project.html#cb29-11" aria-hidden="true" tabindex="-1"></a>psf <span class="ot">&lt;-</span> <span class="fu">prune_taxa</span>(keeptaxa, ps)</span>
+<span id="cb29-12"><a href="project.html#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="project.html#cb29-13" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">ordinate</span>(relf, <span class="at">method =</span> <span class="st">&quot;PCoA&quot;</span>, <span class="at">distance =</span> <span class="st">&quot;bray&quot;</span>)</span>
+<span id="cb29-14"><a href="project.html#cb29-14" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">plot_ordination</span>(relf, ord, <span class="at">shape =</span> <span class="st">&quot;treatment&quot;</span>, <span class="at">color =</span> <span class="st">&quot;timepoint&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-15"><a href="project.html#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb29-16"><a href="project.html#cb29-16" aria-hidden="true" tabindex="-1"></a>b0</span></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="project.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Composition</span></span>
+<span id="cb30-2"><a href="project.html#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="project.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Agglomerate to phylum, family, and genus level</span></span>
+<span id="cb30-4"><a href="project.html#cb30-4" aria-hidden="true" tabindex="-1"></a>phy <span class="ot">&lt;-</span> <span class="fu">tax_glom</span>(relf, <span class="st">&quot;Phylum&quot;</span>)</span>
+<span id="cb30-5"><a href="project.html#cb30-5" aria-hidden="true" tabindex="-1"></a>fam <span class="ot">&lt;-</span> <span class="fu">tax_glom</span>(relf, <span class="st">&quot;Family&quot;</span>)</span>
+<span id="cb30-6"><a href="project.html#cb30-6" aria-hidden="true" tabindex="-1"></a>gen <span class="ot">&lt;-</span> <span class="fu">tax_glom</span>(relf, <span class="st">&quot;Genus&quot;</span>)</span>
+<span id="cb30-7"><a href="project.html#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="project.html#cb30-8" aria-hidden="true" tabindex="-1"></a>phymelt <span class="ot">&lt;-</span> <span class="fu">psmelt</span>(phy)</span>
+<span id="cb30-9"><a href="project.html#cb30-9" aria-hidden="true" tabindex="-1"></a>c0 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(phymelt, <span class="fu">aes</span>(sample_id, Abundance, <span class="at">fill =</span> Phylum)) <span class="sc">+</span></span>
+<span id="cb30-10"><a href="project.html#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="project.html#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb30-12"><a href="project.html#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>)</span>
+<span id="cb30-13"><a href="project.html#cb30-13" aria-hidden="true" tabindex="-1"></a>c0</span></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-4.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="project.html#cb31-1" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">sort</span>(<span class="fu">taxa_sums</span>(fam), <span class="cn">TRUE</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb31-2"><a href="project.html#cb31-2" aria-hidden="true" tabindex="-1"></a>fam10 <span class="ot">&lt;-</span> <span class="fu">prune_taxa</span>(top10, fam)</span>
+<span id="cb31-3"><a href="project.html#cb31-3" aria-hidden="true" tabindex="-1"></a>fammelt <span class="ot">&lt;-</span> <span class="fu">psmelt</span>(fam10)</span>
+<span id="cb31-4"><a href="project.html#cb31-4" aria-hidden="true" tabindex="-1"></a>c1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fammelt, <span class="fu">aes</span>(sample_id, Abundance, <span class="at">fill =</span> Family)) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="project.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="project.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb31-7"><a href="project.html#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>)</span>
+<span id="cb31-8"><a href="project.html#cb31-8" aria-hidden="true" tabindex="-1"></a>c1</span></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-5.png" width="672" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="project.html#cb32-1" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">sort</span>(<span class="fu">taxa_sums</span>(gen), <span class="cn">TRUE</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb32-2"><a href="project.html#cb32-2" aria-hidden="true" tabindex="-1"></a>gen10 <span class="ot">&lt;-</span> <span class="fu">prune_taxa</span>(top10, gen)</span>
+<span id="cb32-3"><a href="project.html#cb32-3" aria-hidden="true" tabindex="-1"></a>genmelt <span class="ot">&lt;-</span> <span class="fu">psmelt</span>(gen10)</span>
+<span id="cb32-4"><a href="project.html#cb32-4" aria-hidden="true" tabindex="-1"></a>c2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(genmelt, <span class="fu">aes</span>(sample_id, Abundance, <span class="at">fill =</span> Genus)) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="project.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="project.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb32-7"><a href="project.html#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>)</span>
+<span id="cb32-8"><a href="project.html#cb32-8" aria-hidden="true" tabindex="-1"></a>c2</span></code></pre></div>
+<p><img src="16sworkshop_files/figure-html/unnamed-chunk-6-6.png" width="672" /></p>
 
 </div>
 </div>

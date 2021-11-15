@@ -117,7 +117,7 @@
 
 \title{16s rRNA analysis workshop}
 \author{Hena R. Ramay}
-\date{2021-11-02}
+\date{2021-11-15}
 
 \begin{document}
 \maketitle
@@ -799,7 +799,127 @@ After filtering, we look the effect of the filtering on the quality profiles. Be
 
 Following the dada2 pipeline, we will have a sequence table and a taxonomy table.
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-1.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-2.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-3.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-4.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-5.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-6.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{path }\OtherTok{\textless{}{-}} \StringTok{"./book/project\_files/"}
+
+\CommentTok{\# Read in files}
+\NormalTok{seqtab }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(path, }\StringTok{"seqtab.rds"}\NormalTok{))}
+\NormalTok{taxa }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(path, }\StringTok{"taxa.rds"}\NormalTok{))}
+\NormalTok{info }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(path, }\StringTok{"project\_metadata.txt"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Match sample names}
+\FunctionTok{rownames}\NormalTok{(info) }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(seqtab)}
+
+\CommentTok{\# Make a phyloseq object}
+\NormalTok{ps }\OtherTok{\textless{}{-}} \FunctionTok{phyloseq}\NormalTok{(}\FunctionTok{otu\_table}\NormalTok{(seqtab, }\AttributeTok{taxa\_are\_rows=}\ConstantTok{FALSE}\NormalTok{), }\FunctionTok{sample\_data}\NormalTok{(info), }\FunctionTok{tax\_table}\NormalTok{(taxa))}
+
+\CommentTok{\# Make timepoint a factor}
+\FunctionTok{sample\_data}\NormalTok{(ps)}\SpecialCharTok{$}\NormalTok{timepoint }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{sample\_data}\NormalTok{(ps)}\SpecialCharTok{$}\NormalTok{timepoint)}
+
+\DocumentationTok{\#\# Histogram of reads per sample}
+\NormalTok{sums }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{otu\_table}\NormalTok{(ps))}
+\NormalTok{counts }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{as}\NormalTok{(}\FunctionTok{sample\_data}\NormalTok{(ps), }\StringTok{"data.frame"}\NormalTok{), }\AttributeTok{totalreads =}\NormalTok{ sums)}
+
+\NormalTok{qq }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(counts, }\FunctionTok{aes}\NormalTok{(totalreads)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \FloatTok{0.02}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Read counts per sample"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_x\_log10}\NormalTok{()}
+\NormalTok{qq}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Alpha diversity}
+
+\DocumentationTok{\#\# Make table of alpha diversity calculations}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FunctionTok{estimate\_richness}\NormalTok{(ps, }\AttributeTok{measures =} \FunctionTok{c}\NormalTok{(}\StringTok{"Chao1"}\NormalTok{, }\StringTok{"Shannon"}\NormalTok{, }\StringTok{"Simpson"}\NormalTok{))}
+\NormalTok{alpha\_info }\OtherTok{\textless{}{-}} \FunctionTok{sample\_data}\NormalTok{(ps)}
+\NormalTok{aa }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(alpha, alpha\_info)}
+
+
+\NormalTok{a0 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(aa, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ treatment, }\AttributeTok{y =}\NormalTok{ Shannon, }\AttributeTok{fill =}\NormalTok{ timepoint)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{outlier.fill =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{outlier.shape =} \DecValTok{21}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.75}\NormalTok{))}
+\NormalTok{a0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Beta diversity}
+
+\CommentTok{\# transform to relative abundace}
+\NormalTok{rel }\OtherTok{\textless{}{-}} \FunctionTok{transform\_sample\_counts}\NormalTok{(ps, }\ControlFlowTok{function}\NormalTok{(x) x }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(x))}
+\CommentTok{\# filter out low prevalence ASVs}
+\NormalTok{prevdf }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(}\AttributeTok{X =} \FunctionTok{otu\_table}\NormalTok{(ps), }\AttributeTok{MARGIN =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{taxa\_are\_rows}\NormalTok{(ps), }\AttributeTok{yes =} \DecValTok{1}\NormalTok{, }\AttributeTok{no =} \DecValTok{2}\NormalTok{), }\AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{sum}\NormalTok{(x }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)\})}
+\NormalTok{prevdf }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{prevalence =}\NormalTok{ prevdf, }\AttributeTok{total\_abundance =} \FunctionTok{taxa\_sums}\NormalTok{(ps), }\FunctionTok{tax\_table}\NormalTok{(ps))}
+\NormalTok{prevalence\_threshold }\OtherTok{\textless{}{-}} \FloatTok{0.05} \SpecialCharTok{*} \FunctionTok{nsamples}\NormalTok{(ps)}
+\NormalTok{keeptaxa }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(prevdf)[prevdf}\SpecialCharTok{$}\NormalTok{prevalence }\SpecialCharTok{\textgreater{}=}\NormalTok{ prevalence\_threshold]}
+\NormalTok{relf }\OtherTok{\textless{}{-}} \FunctionTok{prune\_taxa}\NormalTok{(keeptaxa, rel)}
+\NormalTok{psf }\OtherTok{\textless{}{-}} \FunctionTok{prune\_taxa}\NormalTok{(keeptaxa, ps)}
+
+\NormalTok{ord }\OtherTok{\textless{}{-}} \FunctionTok{ordinate}\NormalTok{(relf, }\AttributeTok{method =} \StringTok{"PCoA"}\NormalTok{, }\AttributeTok{distance =} \StringTok{"bray"}\NormalTok{)}
+\NormalTok{b0 }\OtherTok{\textless{}{-}} \FunctionTok{plot\_ordination}\NormalTok{(relf, ord, }\AttributeTok{shape =} \StringTok{"treatment"}\NormalTok{, }\AttributeTok{color =} \StringTok{"timepoint"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\NormalTok{b0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Composition}
+
+\CommentTok{\# Agglomerate to phylum, family, and genus level}
+\NormalTok{phy }\OtherTok{\textless{}{-}} \FunctionTok{tax\_glom}\NormalTok{(relf, }\StringTok{"Phylum"}\NormalTok{)}
+\NormalTok{fam }\OtherTok{\textless{}{-}} \FunctionTok{tax\_glom}\NormalTok{(relf, }\StringTok{"Family"}\NormalTok{)}
+\NormalTok{gen }\OtherTok{\textless{}{-}} \FunctionTok{tax\_glom}\NormalTok{(relf, }\StringTok{"Genus"}\NormalTok{)}
+
+\NormalTok{phymelt }\OtherTok{\textless{}{-}} \FunctionTok{psmelt}\NormalTok{(phy)}
+\NormalTok{c0 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(phymelt, }\FunctionTok{aes}\NormalTok{(sample\_id, Abundance, }\AttributeTok{fill =}\NormalTok{ Phylum)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{treatment, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{)}
+\NormalTok{c0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top10 }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(}\FunctionTok{sort}\NormalTok{(}\FunctionTok{taxa\_sums}\NormalTok{(fam), }\ConstantTok{TRUE}\NormalTok{))[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\NormalTok{fam10 }\OtherTok{\textless{}{-}} \FunctionTok{prune\_taxa}\NormalTok{(top10, fam)}
+\NormalTok{fammelt }\OtherTok{\textless{}{-}} \FunctionTok{psmelt}\NormalTok{(fam10)}
+\NormalTok{c1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(fammelt, }\FunctionTok{aes}\NormalTok{(sample\_id, Abundance, }\AttributeTok{fill =}\NormalTok{ Family)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{treatment, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{)}
+\NormalTok{c1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top10 }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(}\FunctionTok{sort}\NormalTok{(}\FunctionTok{taxa\_sums}\NormalTok{(gen), }\ConstantTok{TRUE}\NormalTok{))[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\NormalTok{gen10 }\OtherTok{\textless{}{-}} \FunctionTok{prune\_taxa}\NormalTok{(top10, gen)}
+\NormalTok{genmelt }\OtherTok{\textless{}{-}} \FunctionTok{psmelt}\NormalTok{(gen10)}
+\NormalTok{c2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(genmelt, }\FunctionTok{aes}\NormalTok{(sample\_id, Abundance, }\AttributeTok{fill =}\NormalTok{ Genus)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{treatment, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{)}
+\NormalTok{c2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-6.pdf}
 
 \hypertarget{what-next}{%
 \chapter{What Next?}\label{what-next}}

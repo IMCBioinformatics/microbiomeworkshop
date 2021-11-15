@@ -119,7 +119,7 @@ library(tidyverse)
 
 Following the dada2 pipeline, we will have a sequence table and a taxonomy table. 
 
-```{r,echo=F}
+```{r,echo=T}
 path <- "./book/project_files/"
 
 # Read in files
