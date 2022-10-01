@@ -2,9 +2,9 @@
 # DADA2
 
 
-## DADA2 pipeline (v1.2)
+## DADA2 pipeline (v1.18)
 
-From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link http://benjjneb.github.io/dada2/tutorial.html
+From now on, we will be working on the DADA2 package version 1.18. DADA2 has great documentation and an excellent tutorial online.Please go to the following link http://benjjneb.github.io/dada2/tutorial.html
 
 All the notes from now on are my additional comments to help you follow the pipeline:
 

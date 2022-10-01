@@ -17,7 +17,7 @@ Our goal is very similar to gathering data on a city neighbourhood to find out w
 
 ## Basics & Background
 
-Here is the link to the lecture we will  start with today: [workshop](microbiomeworkshop.pdf)
+Here is the link to the lecture we will  start with today: [workshop](new_microbiomeworkshop.pdf)
 
 Key points are:
 

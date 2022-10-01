@@ -6,8 +6,8 @@
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -33,14 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={16s rRNA analysis workshop},
-  pdfauthor={Hena R. Ramay},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -109,15 +101,23 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={16s rRNA analysis workshop},
+  pdfauthor={Hena R. Ramay},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{16s rRNA analysis workshop}
 \author{Hena R. Ramay}
-\date{2021-11-15}
+\date{2022-09-30}
 
 \begin{document}
 \maketitle
@@ -144,9 +144,9 @@ We will try to cover the following material in the course:
   \begin{itemize}
   \tightlist
   \item
-    9:00 - 9:45 am Introductions and a presentation of the basic concepts
+    9:30 - 10:00 am Introductions and a presentation of the basic concepts
   \item
-    9:45 - 10:30 am CutAdapt- how remove primers
+    10:00 - 10:30 am CutAdapt- how remove primers
   \item
     10:30 - 10:45 am Break
   \item
@@ -170,9 +170,15 @@ We will try to cover the following material in the course:
   \item
     12 - 1 pm Lunch break
   \item
-    1 - 2 pm Taxonomy explanation + assign your sequences. If time permits, make a phyloseq object
+    1 - 3 pm Taxonomy explanation + assign your sequences. If time permits, make a phyloseq object
+  \end{itemize}
+\item
+  Day 3
+
+  \begin{itemize}
+  \tightlist
   \item
-    2 - 4 pm on wards we will use a real world dataset to re-do what we have learned here
+    9:30 - 12 pm onwards we will use a real world dataset to re-do what we have learned here
   \end{itemize}
 \end{itemize}
 
@@ -259,16 +265,16 @@ Here, the input reads are in reads.1.fastq and reads.2.fastq, and the result wil
 In paired-end mode, the options -a, -b, -g and -u that also exist in single-end mode are applied to the forward reads only. To modify the reverse read, these options have uppercase versions -A, -B, -G and -U that work just like their counterparts. In the example above, ADAPTER\_FWD will therefore be trimmed from the forward reads and ADAPTER\_REV from the reverse reads.
 
 \begin{longtable}[]{@{}ll@{}}
-\toprule
+\toprule()
 Single-end/R1 option & Corresponding option for R2 \\
-\midrule
+\midrule()
 \endhead
 --adapter, -a & -A \\
 --front, -g & -G \\
 --anywhere, -b & -B \\
 --cut, -u & -U \\
 --output, -o & --paired-output, -p \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 In paired-end mode, Cutadapt checks whether the input files are properly paired. An error is raised if one of the files contains more reads than the other or if the read names in the two files do not match. The read name comparison ignores a trailing /1 or /2 to allow processing some old Illumina paired-end files.
@@ -396,8 +402,8 @@ Read in files
 \end{Shaded}
 
 \begin{verbatim}
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
+## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
+## "none")` instead.
 \end{verbatim}
 
 \includegraphics{16sworkshop_files/figure-latex/make_plots-1.pdf}
@@ -411,8 +417,8 @@ Read in files
 \end{Shaded}
 
 \begin{verbatim}
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
+## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
+## "none")` instead.
 \end{verbatim}
 
 \includegraphics{16sworkshop_files/figure-latex/make_plots-2.pdf}
@@ -601,7 +607,8 @@ Take a look at:
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'time'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'time'. You can override using the
+## `.groups` argument.
 \end{verbatim}
 
 \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-2-2.pdf}
@@ -615,14 +622,15 @@ Figure out how to change the colors to custom colors!!
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'time'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'time'. You can override using the
+## `.groups` argument.
 \end{verbatim}
 
 \begin{verbatim}
 ## # A tibble: 12 x 3
 ## # Groups:   time [2]
 ##    time  Phylum              mean
-##    <fct> <fct>              <dbl>
+##    <chr> <chr>              <dbl>
 ##  1 Early Actinobacteria  0.00133 
 ##  2 Early Bacteroidetes   0.592   
 ##  3 Early Cyanobacteria   0.000594
