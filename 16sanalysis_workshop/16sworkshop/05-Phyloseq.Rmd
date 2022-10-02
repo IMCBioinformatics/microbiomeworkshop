@@ -1,12 +1,6 @@
-# Day Two
+# Downstream Analysis
 
-## Main concepts to be discussed:
-- Finish dada2 pipeline
-- Assign Taxonomy
-- Intro to Phyolseq package
-- Create a Phylum level bar plots
-- Alpha diversity plots
-- Beta diversity plots
+## Phyloseq
 
 
 Once we are finished using the dada2 package, we will have a sequence table and taxonomy table.
@@ -88,29 +82,100 @@ pmelt_filt %>% group_by(time,Phylum) %>% summarise(mean=mean(Abundance))
 ```
 
 
-## Alpha & beta Diversity
+## Alpha Diversity
+
+**Alpha Diversity:** Variety and abundance of organisms within a sample
+
+**Species richness:** The number of different kinds of organisms present in a particular community
+
+**Species evenness** Compares the uniformity of the population size of each of the species present
+
+There are different alpha diversity measures to calculate the biodiversity including Simpson, Shannon, and Observed. These indexes show different estimates of magnitude of change in the niche giving us a more complete picture. There are differences in these indexes in weighting and unit:
+
+**Simpson:** Estimator of species richness and species evenness, but provides more weight to evenness resulted from the sum of squared proportions.
+
+**Shannon:** Estimator of species richness and species evenness, but provides more weight to richness than evenness and is shown as a logarithmic value.
+
+**Observed:** Abundance-based estimator of species richness. This index calculates the minimal number of OTUs (rare OTUs) present in a sample. This index gives more weight to the low abundant species.
 
 
-
-
-```{r, alpha diversit,echo=F, warning=F}
+```{r, alpha diversit,echo=T, warning=F}
 
 richness<-estimate_richness(ps)
 richness$time<-ps@sam_data$time
 
 ggplot(richness,aes(x=time,y=Shannon,color=time)) + geom_boxplot() +geom_jitter()
 
+wilcoxon_shannon <- wilcox.test(Shannon ~ time, data = richness)
+
+wilcoxon_shannon
+
 ```
 
-```{r,echo=F}
+
+## Beta Diversity
+
+Beta diversity is a measure of dissimilarity in microbial composition  **between** two samples.
+
+Distance metrics: Bray–Curtis method does not look at the phylogenetic relatedness and takes the taxa abundance into consideration. This distance is defined as the difference of the abundance divided by the total abundance contributed by both samples. Unifrac method calculates the distances between samples based on their phylogenetic relatedness. There are two unifrac measures: unweighted UniFrac, a qualitative measure that takes presence/absence of data into consideration to compare community composition. This suggests if ecological factors prevent a taxonomic group from occupying certain habitats.Weighted UniFrac, a quantitative measure weights the branches of a phylogenetic tree based on the the the relative abundance of species/taxa. This suggests if ecological differences between habitats have caused the abundance of taxonomic groups to change.
+
+
+```{r,echo=T}
+
+# Calculate Bray-curtis dissimilarity
+ord<-ordinate(ps,method = "PCoA",distance = "bray")
+
+# plot ordination
+plot_ordination(ps,ordination = ord,color="time",title="Bray PCoA (No transformation)")+ scale_colour_manual(values=(c("tomato","blue")))
+
+# plot ordination with relative abundance values
+ps %>%
+transform_sample_counts(., function(x) x/sum(x)) %>%
+plot_ordination(., ordinate(., method="PCoA", distance="bray"),
+color="time" ,title="Bray PCoA (Relative Abundance)")+ scale_colour_manual(values=(c("tomato","blue"))) + geom_point()#%>% #+ theme_bw()
+
+# plot ordination with log transfromed values
 ps %>%
 transform_sample_counts(., function(x) log(1 + x)) %>%
 plot_ordination(., ordinate(., method="PCoA", distance="bray"),
-color="time" ,title="Bray NMDS")+ scale_colour_manual(values=(c("tomato","blue"))) + geom_point()#%>% #+ theme_bw()
+color="time" ,title="Bray PCoA (log transfomed)")+ scale_colour_manual(values=(c("tomato","blue"))) + geom_point()#%>% #+ theme_bw()
 
-#ps%>%
-ord<-ordinate(ps,method = "PCoA",distance = "bray")
 
-plot_ordination(ps,ordination = ord,color="time")
+# Permanova ()
+ps_rel<- ps %>% transform_sample_counts(., function(x) x/sum(x))
+asv <- as.matrix(ps_rel@otu_table@.Data)
+colnames(asv)<-paste0(ps_rel@tax_table[,5],"_",ps_rel@tax_table[,6],"_",ps_rel@tax_table[,7])
+
+meta <- data.frame(ps_rel@sam_data)
+
+permanova <- vegan::adonis(asv ~ time,
+               data = meta, permutations=999, method = "bray")
+
+coef <- coefficients(permanova)["time1",]
+top.coef <- coef[rev(order(abs(coef)))[1:20]]
+par(mar = c(2, 24, 2, 1),cex=0.5)
+barplot(sort(top.coef), horiz = T, las = 1, main = "Top taxa")
+
+
+```
+
+## Differential Abundance Analysis
+
+Differential abundance analysis is performed between two condition or time points to find taxa that have either bloomed or depleted from one condition compared to another.
+There is a variety of tests that can be used to perform this analysis like **DESeq2**, **ANCOM-BC**, **Corncob** to name a few.
+
+### DESEQ2
+
+For demonstration purpose, we will use DESeq2 here.It internally performs data normalization and does p-value correction. It used a negative binomial distribution to detect differences in read counts between groups.To fully understand the method you can watch this detailed video by Statquest [here](https://www.youtube.com/watch?v=UFB993xufUU&t=12s&ab_channel=StatQuestwithJoshStarmer)
+
+```{r}
+library(DESeq2)
+dds<-phyloseq_to_deseq2(ps,design = ~time)
+dds <- DESeq(dds)
+res <- results(dds)
+df <- as.data.frame(res)
+# Orders the rows of data frame in increasing order firstly based on column
+# "log2FoldChange" and secondly based on "padj" column
+df <- df %>% arrange(log2FoldChange, padj)
 
 ```

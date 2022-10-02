@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2022-09-30" />
+<meta name="date" content="2022-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="primer-removal.html"/>
-<link rel="next" href="day-two.html"/>
+<link rel="next" href="downstream-analysis.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><a href="dada2.html#dada2" id="toc-dada2"><span class="toc-section-number">4</span> DADA2</a>
 <ul>
-<li><a href="dada2.html#dada2-pipeline-v1.2" id="toc-dada2-pipeline-v1.2"><span class="toc-section-number">4.1</span> DADA2 pipeline (v1.2)</a>
+<li><a href="dada2.html#dada2-pipeline-v1.18" id="toc-dada2-pipeline-v1.18"><span class="toc-section-number">4.1</span> DADA2 pipeline (v1.18)</a>
 <ul>
 <li><a href="dada2.html#data-for-the-tutorial" id="toc-data-for-the-tutorial"><span class="toc-section-number">4.1.1</span> Data for the tutorial</a></li>
 <li><a href="dada2.html#getting-ready-load-packages-and-get-file-list" id="toc-getting-ready-load-packages-and-get-file-list"><span class="toc-section-number">4.1.2</span> Getting ready ( load packages and get file list)</a></li>
@@ -167,10 +167,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><a href="dada2.html#some-tips" id="toc-some-tips"><span class="toc-section-number">4.2</span> Some tips:</a></li>
 </ul></li>
-<li><a href="day-two.html#day-two" id="toc-day-two"><span class="toc-section-number">5</span> Day Two</a>
+<li><a href="downstream-analysis.html#downstream-analysis" id="toc-downstream-analysis"><span class="toc-section-number">5</span> Downstream Analysis</a>
 <ul>
-<li><a href="day-two.html#main-concepts-to-be-discussed" id="toc-main-concepts-to-be-discussed"><span class="toc-section-number">5.1</span> Main concepts to be discussed:</a></li>
-<li><a href="day-two.html#alpha-beta-diversity" id="toc-alpha-beta-diversity"><span class="toc-section-number">5.2</span> Alpha &amp; beta Diversity</a></li>
+<li><a href="downstream-analysis.html#phyloseq" id="toc-phyloseq"><span class="toc-section-number">5.1</span> Phyloseq</a></li>
+<li><a href="downstream-analysis.html#alpha-diversity" id="toc-alpha-diversity"><span class="toc-section-number">5.2</span> Alpha Diversity</a></li>
+<li><a href="downstream-analysis.html#beta-diversity" id="toc-beta-diversity"><span class="toc-section-number">5.3</span> Beta Diversity</a></li>
+<li><a href="downstream-analysis.html#differential-abundance-analysis" id="toc-differential-abundance-analysis"><span class="toc-section-number">5.4</span> Differential Abundance Analysis</a>
+<ul>
+<li><a href="downstream-analysis.html#deseq2" id="toc-deseq2"><span class="toc-section-number">5.4.1</span> DESEQ2</a></li>
+</ul></li>
 </ul></li>
 <li><a href="project.html#project" id="toc-project"><span class="toc-section-number">6</span> Project</a>
 <ul>
@@ -212,9 +217,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="dada2" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> DADA2</h1>
-<div id="dada2-pipeline-v1.2" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> DADA2 pipeline (v1.2)</h2>
-<p>From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link <a href="http://benjjneb.github.io/dada2/tutorial.html" class="uri">http://benjjneb.github.io/dada2/tutorial.html</a></p>
+<div id="dada2-pipeline-v1.18" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> DADA2 pipeline (v1.18)</h2>
+<p>From now on, we will be working on the DADA2 package version 1.18. DADA2 has great documentation and an excellent tutorial online.Please go to the following link <a href="http://benjjneb.github.io/dada2/tutorial.html" class="uri">http://benjjneb.github.io/dada2/tutorial.html</a></p>
 <p>All the notes from now on are my additional comments to help you follow the pipeline:</p>
 <div id="data-for-the-tutorial" class="section level3" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> Data for the tutorial</h3>
@@ -312,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="primer-removal.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="day-two.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="downstream-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

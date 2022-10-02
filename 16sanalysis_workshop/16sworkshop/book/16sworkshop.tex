@@ -117,7 +117,7 @@
 
 \title{16s rRNA analysis workshop}
 \author{Hena R. Ramay}
-\date{2022-09-30}
+\date{2022-10-01}
 
 \begin{document}
 \maketitle
@@ -190,7 +190,7 @@ We will try to cover the following material in the course:
 \item
   DADA2 Tutorial : \href{http://benjjneb.github.io/dada2/tutorial.html}{link}
 \item
-  Day One presentation : \href{microbiomeworkshop.pdf}{link}
+  Day One presentation : \href{new_microbiomeworkshop.pdf}{link}
 \item
   Day One dataset : \href{MiSeqSOPData.zip}{link}
 \item
@@ -214,7 +214,7 @@ For the scope of this workshop we will stick to the simple questions: who and ho
 \hypertarget{basics-background}{%
 \section{Basics \& Background}\label{basics-background}}
 
-Here is the link to the lecture we will start with today: \href{microbiomeworkshop.pdf}{workshop}
+Here is the link to the lecture we will start with today: \href{new_microbiomeworkshop.pdf}{workshop}
 
 Key points are:
 
@@ -295,10 +295,10 @@ Follow this link to see how you can call cutAdapt from within R
 \hypertarget{dada2}{%
 \chapter{DADA2}\label{dada2}}
 
-\hypertarget{dada2-pipeline-v1.2}{%
-\section{DADA2 pipeline (v1.2)}\label{dada2-pipeline-v1.2}}
+\hypertarget{dada2-pipeline-v1.18}{%
+\section{DADA2 pipeline (v1.18)}\label{dada2-pipeline-v1.18}}
 
-From now on, we will be working on the DADA2 package version 1.12. DADA2 has great documentation and an excellent tutorial online.Please go to the following link \url{http://benjjneb.github.io/dada2/tutorial.html}
+From now on, we will be working on the DADA2 package version 1.18. DADA2 has great documentation and an excellent tutorial online.Please go to the following link \url{http://benjjneb.github.io/dada2/tutorial.html}
 
 All the notes from now on are my additional comments to help you follow the pipeline:
 
@@ -452,27 +452,11 @@ For the rest of the DADA2 pipelien please \href{https://benjjneb.github.io/dada2
   If you lose too many sequences to chimera removal, please check that the primers are removed properly.
 \end{enumerate}
 
-\hypertarget{day-two}{%
-\chapter{Day Two}\label{day-two}}
+\hypertarget{downstream-analysis}{%
+\chapter{Downstream Analysis}\label{downstream-analysis}}
 
-\hypertarget{main-concepts-to-be-discussed}{%
-\section{Main concepts to be discussed:}\label{main-concepts-to-be-discussed}}
-
-\begin{itemize}
-\tightlist
-\item
-  Finish dada2 pipeline
-\item
-  Assign Taxonomy
-\item
-  Intro to Phyolseq package
-\item
-  Create a Phylum level bar plots
-\item
-  Alpha diversity plots
-\item
-  Beta diversity plots
-\end{itemize}
+\hypertarget{phyloseq}{%
+\section{Phyloseq}\label{phyloseq}}
 
 Once we are finished using the dada2 package, we will have a sequence table and taxonomy table.
 
@@ -645,12 +629,375 @@ Figure out how to change the colors to custom colors!!
 ## 12 Late  Tenericutes     0.00845
 \end{verbatim}
 
-\hypertarget{alpha-beta-diversity}{%
-\section{Alpha \& beta Diversity}\label{alpha-beta-diversity}}
+\hypertarget{alpha-diversity}{%
+\section{Alpha Diversity}\label{alpha-diversity}}
+
+\textbf{Alpha Diversity:} Variety and abundance of organisms within a sample
+
+\textbf{Species richness:} The number of different kinds of organisms present in a particular community
+
+\textbf{Species evenness} Compares the uniformity of the population size of each of the species present
+
+There are different alpha diversity measures to calculate the biodiversity including Simpson, Shannon, and Observed. These indexes show different estimates of magnitude of change in the niche giving us a more complete picture. There are differences in these indexes in weighting and unit:
+
+\textbf{Simpson:} Estimator of species richness and species evenness, but provides more weight to evenness resulted from the sum of squared proportions.
+
+\textbf{Shannon:} Estimator of species richness and species evenness, but provides more weight to richness than evenness and is shown as a logarithmic value.
+
+\textbf{Observed:} Abundance-based estimator of species richness. This index calculates the minimal number of OTUs (rare OTUs) present in a sample. This index gives more weight to the low abundant species.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{richness}\OtherTok{\textless{}{-}}\FunctionTok{estimate\_richness}\NormalTok{(ps)}
+\NormalTok{richness}\SpecialCharTok{$}\NormalTok{time}\OtherTok{\textless{}{-}}\NormalTok{ps}\SpecialCharTok{@}\NormalTok{sam\_data}\SpecialCharTok{$}\NormalTok{time}
+
+\FunctionTok{ggplot}\NormalTok{(richness,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{time,}\AttributeTok{y=}\NormalTok{Shannon,}\AttributeTok{color=}\NormalTok{time)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}\FunctionTok{geom\_jitter}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 \includegraphics{16sworkshop_files/figure-latex/alpha diversit-1.pdf}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-1.pdf} \includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-2.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wilcoxon\_shannon }\OtherTok{\textless{}{-}} \FunctionTok{wilcox.test}\NormalTok{(Shannon }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ richness)}
+
+\NormalTok{wilcoxon\_shannon}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  Shannon by time
+## W = 65, p-value = 0.1128
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+\hypertarget{beta-diversity}{%
+\section{Beta Diversity}\label{beta-diversity}}
+
+Beta diversity is a measure of dissimilarity in microbial composition \textbf{between} two samples.
+
+Distance metrics: Bray--Curtis method does not look at the phylogenetic relatedness and takes the taxa abundance into consideration. This distance is defined as the difference of the abundance divided by the total abundance contributed by both samples. Unifrac method calculates the distances between samples based on their phylogenetic relatedness. There are two unifrac measures: unweighted UniFrac, a qualitative measure that takes presence/absence of data into consideration to compare community composition. This suggests if ecological factors prevent a taxonomic group from occupying certain habitats.Weighted UniFrac, a quantitative measure weights the branches of a phylogenetic tree based on the the the relative abundance of species/taxa. This suggests if ecological differences between habitats have caused the abundance of taxonomic groups to change.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate Bray{-}curtis dissimilarity}
+\NormalTok{ord}\OtherTok{\textless{}{-}}\FunctionTok{ordinate}\NormalTok{(ps,}\AttributeTok{method =} \StringTok{"PCoA"}\NormalTok{,}\AttributeTok{distance =} \StringTok{"bray"}\NormalTok{)}
+
+\CommentTok{\# plot ordination}
+\FunctionTok{plot\_ordination}\NormalTok{(ps,}\AttributeTok{ordination =}\NormalTok{ ord,}\AttributeTok{color=}\StringTok{"time"}\NormalTok{,}\AttributeTok{title=}\StringTok{"Bray PCoA (No transformation)"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"tomato"}\NormalTok{,}\StringTok{"blue"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot ordination with relative abundance values}
+\NormalTok{ps }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{transform\_sample\_counts}\NormalTok{(., }\ControlFlowTok{function}\NormalTok{(x) x}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(x)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{plot\_ordination}\NormalTok{(., }\FunctionTok{ordinate}\NormalTok{(., }\AttributeTok{method=}\StringTok{"PCoA"}\NormalTok{, }\AttributeTok{distance=}\StringTok{"bray"}\NormalTok{),}
+\AttributeTok{color=}\StringTok{"time"}\NormalTok{ ,}\AttributeTok{title=}\StringTok{"Bray PCoA (Relative Abundance)"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"tomato"}\NormalTok{,}\StringTok{"blue"}\NormalTok{))) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}\CommentTok{\#\%\textgreater{}\% \#+ theme\_bw()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot ordination with log transfromed values}
+\NormalTok{ps }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{transform\_sample\_counts}\NormalTok{(., }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ x)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{plot\_ordination}\NormalTok{(., }\FunctionTok{ordinate}\NormalTok{(., }\AttributeTok{method=}\StringTok{"PCoA"}\NormalTok{, }\AttributeTok{distance=}\StringTok{"bray"}\NormalTok{),}
+\AttributeTok{color=}\StringTok{"time"}\NormalTok{ ,}\AttributeTok{title=}\StringTok{"Bray PCoA (log transfomed)"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"tomato"}\NormalTok{,}\StringTok{"blue"}\NormalTok{))) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}\CommentTok{\#\%\textgreater{}\% \#+ theme\_bw()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Permanova ()}
+\NormalTok{ps\_rel}\OtherTok{\textless{}{-}}\NormalTok{ ps }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{transform\_sample\_counts}\NormalTok{(., }\ControlFlowTok{function}\NormalTok{(x) x}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(x))}
+\NormalTok{asv }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(ps\_rel}\SpecialCharTok{@}\NormalTok{otu\_table}\SpecialCharTok{@}\NormalTok{.Data)}
+\FunctionTok{colnames}\NormalTok{(asv)}\OtherTok{\textless{}{-}}\FunctionTok{paste0}\NormalTok{(ps\_rel}\SpecialCharTok{@}\NormalTok{tax\_table[,}\DecValTok{5}\NormalTok{],}\StringTok{"\_"}\NormalTok{,ps\_rel}\SpecialCharTok{@}\NormalTok{tax\_table[,}\DecValTok{6}\NormalTok{],}\StringTok{"\_"}\NormalTok{,ps\_rel}\SpecialCharTok{@}\NormalTok{tax\_table[,}\DecValTok{7}\NormalTok{])}
+
+\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(ps\_rel}\SpecialCharTok{@}\NormalTok{sam\_data)}
+
+\NormalTok{permanova }\OtherTok{\textless{}{-}}\NormalTok{ vegan}\SpecialCharTok{::}\FunctionTok{adonis}\NormalTok{(asv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time,}
+               \AttributeTok{data =}\NormalTok{ meta, }\AttributeTok{permutations=}\DecValTok{999}\NormalTok{, }\AttributeTok{method =} \StringTok{"bray"}\NormalTok{)}
+
+\NormalTok{coef }\OtherTok{\textless{}{-}} \FunctionTok{coefficients}\NormalTok{(permanova)[}\StringTok{"time1"}\NormalTok{,]}
+\NormalTok{top.coef }\OtherTok{\textless{}{-}}\NormalTok{ coef[}\FunctionTok{rev}\NormalTok{(}\FunctionTok{order}\NormalTok{(}\FunctionTok{abs}\NormalTok{(coef)))[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]]}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{),}\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{)}
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{sort}\NormalTok{(top.coef), }\AttributeTok{horiz =}\NormalTok{ T, }\AttributeTok{las =} \DecValTok{1}\NormalTok{, }\AttributeTok{main =} \StringTok{"Top taxa"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-3-4.pdf}
+
+\hypertarget{differential-abundance-analysis}{%
+\section{Differential Abundance Analysis}\label{differential-abundance-analysis}}
+
+Differential abundance analysis is performed between two condition or time points to find taxa that have either bloomed or depleted from one condition compared to another.
+There is a variety of tests that can be used to perform this analysis like \textbf{DESeq2}, \textbf{ANCOM-BC}, \textbf{Corncob} to name a few.
+
+\hypertarget{deseq2}{%
+\subsection{DESEQ2}\label{deseq2}}
+
+For demonstration purpose, we will use DESeq2 here.It internally performs data normalization and does p-value correction. It used a negative binomial distribution to detect differences in read counts between groups.To fully understand the method you can watch this detailed video by Statquest \href{https://www.youtube.com/watch?v=UFB993xufUU\&t=12s\&ab_channel=StatQuestwithJoshStarmer}{here}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DESeq2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: S4Vectors
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: stats4
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: BiocGenerics
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'BiocGenerics'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     combine, intersect, setdiff, union
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:limma':
+## 
+##     plotMA
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     IQR, mad, sd, var, xtabs
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+##     union, unique, unsplit, which.max, which.min
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'S4Vectors'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     first, rename
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     expand.grid, I, unname
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: IRanges
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'IRanges'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:phyloseq':
+## 
+##     distance
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     collapse, desc, slice
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: GenomicRanges
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: GenomeInfoDb
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: SummarizedExperiment
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: MatrixGenerics
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: matrixStats
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'matrixStats'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     count
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'MatrixGenerics'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:matrixStats':
+## 
+##     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+##     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+##     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+##     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+##     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+##     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+##     colWeightedMeans, colWeightedMedians, colWeightedSds,
+##     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+##     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+##     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+##     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+##     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+##     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+##     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+##     rowWeightedSds, rowWeightedVars
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Biobase
+\end{verbatim}
+
+\begin{verbatim}
+## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     'browseVignettes()'. To cite Bioconductor, see
+##     'citation("Biobase")', and for packages 'citation("pkgname")'.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Biobase'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:MatrixGenerics':
+## 
+##     rowMedians
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:matrixStats':
+## 
+##     anyMissing, rowMedians
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:phyloseq':
+## 
+##     sampleNames
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dds}\OtherTok{\textless{}{-}}\FunctionTok{phyloseq\_to\_deseq2}\NormalTok{(ps,}\AttributeTok{design =} \SpecialCharTok{\textasciitilde{}}\NormalTok{time)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## converting counts to integer mode
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in DESeqDataSet(se, design = design, ignoreRank): some variables in
+## design formula are characters, converting to factors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dds }\OtherTok{\textless{}{-}} \FunctionTok{DESeq}\NormalTok{(dds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## estimating size factors
+\end{verbatim}
+
+\begin{verbatim}
+## estimating dispersions
+\end{verbatim}
+
+\begin{verbatim}
+## gene-wise dispersion estimates
+\end{verbatim}
+
+\begin{verbatim}
+## mean-dispersion relationship
+\end{verbatim}
+
+\begin{verbatim}
+## final dispersion estimates
+\end{verbatim}
+
+\begin{verbatim}
+## fitting model and testing
+\end{verbatim}
+
+\begin{verbatim}
+## -- replacing outliers and refitting for 22 genes
+## -- DESeq argument 'minReplicatesForReplace' = 7 
+## -- original counts are preserved in counts(dds)
+\end{verbatim}
+
+\begin{verbatim}
+## estimating dispersions
+\end{verbatim}
+
+\begin{verbatim}
+## fitting model and testing
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{results}\NormalTok{(dds)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(res)}
+\CommentTok{\# Orders the rows of data frame in increasing order firstly based on column}
+\CommentTok{\# "log2FoldChange" and secondly based on "padj" column}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(log2FoldChange, padj)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{project}{%
 \chapter{Project}\label{project}}
@@ -834,7 +1181,7 @@ Following the dada2 pipeline, we will have a sequence table and a taxonomy table
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-7-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -854,7 +1201,7 @@ Following the dada2 pipeline, we will have a sequence table and a taxonomy table
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-2.pdf}
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-7-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -877,7 +1224,7 @@ Following the dada2 pipeline, we will have a sequence table and a taxonomy table
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-3.pdf}
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-7-3.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -897,7 +1244,7 @@ Following the dada2 pipeline, we will have a sequence table and a taxonomy table
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-4.pdf}
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-7-4.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -912,7 +1259,7 @@ Following the dada2 pipeline, we will have a sequence table and a taxonomy table
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-5.pdf}
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-7-5.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -927,7 +1274,7 @@ Following the dada2 pipeline, we will have a sequence table and a taxonomy table
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-6-6.pdf}
+\includegraphics{16sworkshop_files/figure-latex/unnamed-chunk-7-6.pdf}
 
 \hypertarget{what-next}{%
 \chapter{What Next?}\label{what-next}}

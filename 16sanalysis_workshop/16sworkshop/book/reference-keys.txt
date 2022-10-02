@@ -5,7 +5,10 @@ primer-removal
 cutadapt
 dada2
 some-tips
-day-two
+phyloseq
+alpha-diversity
+beta-diversity
+deseq2
 project
 setup
 cutadapt-1
