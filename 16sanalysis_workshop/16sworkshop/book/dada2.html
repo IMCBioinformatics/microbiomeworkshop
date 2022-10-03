@@ -24,7 +24,7 @@
 <meta name="author" content="Hena R. Ramay" />
 
 
-<meta name="date" content="2022-10-01" />
+<meta name="date" content="2022-10-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -263,10 +263,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [33] &quot;F3D7_S195_L001_R1_001.fastq&quot;   &quot;F3D7_S195_L001_R2_001.fastq&quot;  
 ## [35] &quot;F3D8_S196_L001_R1_001.fastq&quot;   &quot;F3D8_S196_L001_R2_001.fastq&quot;  
 ## [37] &quot;F3D9_S197_L001_R1_001.fastq&quot;   &quot;F3D9_S197_L001_R2_001.fastq&quot;  
-## [39] &quot;filtered&quot;                      &quot;HMP_MOCK.v35.fasta&quot;           
-## [41] &quot;Mock_S280_L001_R1_001.fastq&quot;   &quot;Mock_S280_L001_R2_001.fastq&quot;  
-## [43] &quot;mouse.dpw.metadata&quot;            &quot;mouse.time.design&quot;            
-## [45] &quot;stability.batch&quot;               &quot;stability.files&quot;</code></pre>
+## [39] &quot;HMP_MOCK.v35.fasta&quot;            &quot;Mock_S280_L001_R1_001.fastq&quot;  
+## [41] &quot;Mock_S280_L001_R2_001.fastq&quot;   &quot;mouse.dpw.metadata&quot;           
+## [43] &quot;mouse.time.design&quot;             &quot;stability.batch&quot;              
+## [45] &quot;stability.files&quot;</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="dada2.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq</span></span>
 <span id="cb5-2"><a href="dada2.html#cb5-2" aria-hidden="true" tabindex="-1"></a>fnFs <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">list.files</span>(path, <span class="at">pattern=</span><span class="st">&quot;_R1_001.fastq&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb5-3"><a href="dada2.html#cb5-3" aria-hidden="true" tabindex="-1"></a>fnRs <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">list.files</span>(path, <span class="at">pattern=</span><span class="st">&quot;_R2_001.fastq&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span>

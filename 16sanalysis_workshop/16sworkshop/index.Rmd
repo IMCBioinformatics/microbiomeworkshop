@@ -40,6 +40,6 @@ We will try to cover the following material in the course:
 ## Important links
 
 - DADA2 Tutorial :  [link](http://benjjneb.github.io/dada2/tutorial.html)
-- Day One presentation : [link](new_microbiomeworkshop.pdf)
-- Day One dataset : [link](MiSeqSOPData.zip)
-- Project dataset : [link](https://www.dropbox.com/sh/qra6ohbsyt1icaz/AAACvlNjUhfkbkGIp_1KA2uCa?dl=0)
+- Presentation slides: [link](new_microbiomeworkshop.pdf)
+- Workshop dataset : [link](MiSeqSOPData.zip)
+- Project dataset : [link](https://www.dropbox.com/sh/1oy9upgzxlsra9y/AAANkbCj36lvP6vEQucE7fYna?dl=0)
